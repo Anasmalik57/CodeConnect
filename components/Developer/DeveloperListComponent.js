@@ -58,7 +58,7 @@ export default function DevelopersPage() {
       <div className="max-w-7xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent mb-4">
+          <h1 className="text-5xl md:text-6xl font-black bg-linear-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent mb-4">
             Hire Top Developers
           </h1>
           <p className="text-xl text-violet-300/80 font-medium">
