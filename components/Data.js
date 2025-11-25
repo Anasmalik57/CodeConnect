@@ -1,17 +1,8 @@
-import {
-  Shield,
-  Zap,
-  Users,
-  Star,
-  CheckCircle2,
-  Code2,
-  Wrench,
-  HeadphonesIcon,
-  Rocket,
-  MessageCircle,
-  ArrowRight,
-  Sparkles,
-} from "lucide-react";
+import { Building2, Code2, CreditCard, Crown, GraduationCap, HeadphonesIcon, MessageCircle, Package, Rocket, Users, Wrench, Zap } from "lucide-react";
+
+
+
+
 // About PAge Services
 export const aboutServices = [
   {
@@ -62,5 +53,154 @@ export const testimonials = [
     text: "Flawless installation + customization. Support team replies in minutes.",
     author: "Amit Verma",
     role: "Digital Agency CEO",
+  },
+];
+
+// ======================================================
+// ============ Pricing Page Data ======================
+// ======================================================
+
+export const softwareProducts = [
+  {
+    name: "Real Estate CRM",
+    icon: Building2,
+    price: "₹15,000",
+    description: "Complete property management and client relationship system",
+    features: [
+      "Property listing management",
+      "Lead tracking & conversion",
+      "Document management",
+      "Client portal access",
+      "Payment tracking",
+      "Automated follow-ups",
+    ],
+    color: "from-blue-500 to-sky-500",
+  },
+  {
+    name: "School ERP",
+    icon: GraduationCap,
+    price: "₹25,000",
+    description: "Comprehensive school management and administration platform",
+    features: [
+      "Student & staff management",
+      "Attendance tracking",
+      "Fee management system",
+      "Exam & grade management",
+      "Parent-teacher communication",
+      "Library & transport module",
+    ],
+    color: "from-sky-500 to-teal-500",
+    popular: true,
+  },
+  {
+    name: "Inventory Management",
+    icon: Package,
+    price: "₹12,000",
+    description: "Smart inventory tracking and warehouse management solution",
+    features: [
+      "Real-time stock tracking",
+      "Multi-location support",
+      "Purchase order management",
+      "Low stock alerts",
+      "Barcode scanning",
+      "Detailed reports & analytics",
+    ],
+    color: "from-teal-500 to-blue-500",
+  },
+  {
+    name: "POS + Billing Software",
+    icon: CreditCard,
+    price: "₹18,000",
+    description: "Modern point-of-sale with integrated billing system",
+    features: [
+      "Quick billing interface",
+      "Multi-payment support",
+      "Invoice generation",
+      "Sales analytics dashboard",
+      "Customer management",
+      "GST compliance ready",
+    ],
+    color: "from-blue-500 to-teal-500",
+  },
+];
+
+
+// =====================================================================
+// ======================= Developer Tiers ================================
+export const developerTiers = [
+  {
+    level: "Junior Developer",
+    icon: Code2,
+    price: "₹300 – ₹500",
+    period: "per hour",
+    description: "Perfect for basic web development and simple projects",
+    technologies: [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "WordPress",
+      "Bootstrap",
+      "jQuery",
+    ],
+    features: [
+      "Basic website development",
+      "Responsive design implementation",
+      "WordPress customization",
+      "Bug fixes & maintenance",
+      "Up to 40 hours/week availability",
+    ],
+    color: "from-blue-500 to-sky-500",
+    popular: false,
+  },
+  {
+    level: "Mid-Level Developer",
+    icon: Zap,
+    price: "₹600 – ₹1000",
+    period: "per hour",
+    description: "Ideal for full-stack applications and modern frameworks",
+    technologies: [
+      "React",
+      "Node.js",
+      "Laravel",
+      "Flutter",
+      "Vue.js",
+      "MongoDB",
+    ],
+    features: [
+      "Full-stack web applications",
+      "Mobile app development",
+      "API development & integration",
+      "Database design & optimization",
+      "Code reviews & best practices",
+      "Up to 50 hours/week availability",
+    ],
+    color: "from-sky-500 to-teal-500",
+    popular: true,
+  },
+  {
+    level: "Senior Developer",
+    icon: Crown,
+    price: "₹1200+",
+    period: "per hour",
+    description: "Enterprise solutions with advanced tech stack",
+    technologies: [
+      "MERN Stack",
+      "DevOps",
+      "AI/ML",
+      "Cloud (AWS/Azure)",
+      "Microservices",
+      "Docker",
+    ],
+    features: [
+      "Complex system architecture",
+      "AI/ML integration",
+      "Cloud infrastructure setup",
+      "Performance optimization",
+      "Technical leadership & mentoring",
+      "24/7 support availability",
+      "Scalable enterprise solutions",
+    ],
+    color: "from-teal-500 to-blue-500",
+    popular: false,
   },
 ];

@@ -8,6 +8,7 @@ const navLinks = [
   { name: "Developers", href: "/developers", icon: Code2 },
   { name: "Softwares", href: "/softwares-readymade", icon: FolderCode  },
   { name: "About", href: "/about", icon: BookAudio   },
+  { name: "Pricing", href: "/pricing", icon: BookAudio   },
   { name: "Contact", href: "/contact", icon: Mail },
 ];
 
@@ -25,7 +26,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`z-50 border-b border-blue-300/70 transition-all duration-500 ${scrolled ? "bg-black/80 backdrop-blur-2xl border-b border-blue-500/30 shadow-xl shadow-blue-900/50": "bg-transparent"}`}>
-        <div className="max-w-[1350px] mx-auto px-5 lg:px-8">
+        <div className="max-w-[1500] mx-auto px-5 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
