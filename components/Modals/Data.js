@@ -1,3 +1,9 @@
+export const developersType = [
+  "App Developer",
+  "Web Developer",
+  "Full Stack Enginner",
+  "DevOps Engineer",
+];
 export const languages = [
   "English",
   "Hindi",
@@ -27,13 +33,12 @@ export const timeSlots = [
   "I'll share via WhatsApp",
 ];
 
-
 // Setup Types
 
- export const setupTypes = [
-    "Web Only",
-    "Web + Admin Panel",
-    "Web + Mobile App",
-    "Mobile Only (Flutter/React Native)",
-    "Full Stack + API",
-  ];
+export const setupTypes = [
+  "Web Only",
+  "Web + Admin Panel",
+  "Web + Mobile App",
+  "Mobile Only (Flutter/React Native)",
+  "Full Stack + API",
+];
