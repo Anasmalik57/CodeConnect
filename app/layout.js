@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import FloatingLinearOrb from "@/components/FloatingLinearOrb";
+import FooterComponent from "@/components/Footer";
 
 export const metadata = {
   title: "NoDeskDeveloper - Connect, Build, Grow",
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <FloatingLinearOrb />
           {children}
+          <FooterComponent />
         </>
       </body>
     </html>
