@@ -1,14 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Home, Code2, Mail, Menu, X, Sparkles, FolderCode, BookAudio } from "lucide-react";
+import { Home, Code2, Mail, Menu, X, Sparkles, FolderCode, BookAudio, IndianRupee } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Developers", href: "/developers", icon: Code2 },
+  { name: "Hire Developers", href: "/developers", icon: Code2 },
   { name: "Softwares", href: "/softwares-readymade", icon: FolderCode  },
+  { name: "Book Services", href: "/book-services", icon: FolderCode  },
   { name: "About", href: "/about", icon: BookAudio   },
-  { name: "Pricing", href: "/pricing", icon: BookAudio   },
+  { name: "Pricing", href: "/pricing", icon: IndianRupee   },
   { name: "Contact", href: "/contact", icon: Mail },
 ];
 
@@ -26,7 +27,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`z-50 border-b border-blue-300/70 transition-all duration-500 ${scrolled ? "bg-black/80 backdrop-blur-2xl border-b border-blue-500/30 shadow-xl shadow-blue-900/50": "bg-transparent"}`}>
-        <div className="max-w-[1500] mx-auto px-5 lg:px-8">
+        <div className="max-w-[1500px] mx-auto px-5 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
@@ -53,7 +54,7 @@ export default function Navbar() {
                   key={name}
                   href={href}
                   onClick={() => setActive(name)}
-                  className="relative group px-6 py-3 rounded-2xl overflow-hidden transition-all duration-300"
+                  className="relative group px-4 py-3 text-sm rounded-2xl overflow-hidden transition-all duration-300"
                 >
                   <span
                     className={`absolute inset-0 bg-linear-to-r from-blue-600/0 via-sky-600/0 to-blue-600/0 
@@ -64,7 +65,7 @@ export default function Navbar() {
                     <span className="absolute inset-0 bg-linear-to-r from-blue-500 via-sky-500 to-teal-500 rounded-2xl blur-xl opacity-60 animate-pulse" />
                   )}
                   <span className="relative flex items-center gap-2.5 font-semibold text-white/80 group-hover:text-white transition-colors">
-                    <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                    <Icon className="size-4  group-hover:scale-110 transition-transform duration-300" />
                     {name}
                   </span>
                 </Link>
@@ -91,7 +92,7 @@ export default function Navbar() {
 
         {/* Mobile Menu - Sleek & Smooth */}
         <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
-            mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            mobileOpen ? "opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <div className="px-5 py-6 space-y-3 bg-black/90 backdrop-blur-3xl border-t border-blue-500/40">
