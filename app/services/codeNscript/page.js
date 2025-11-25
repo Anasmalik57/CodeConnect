@@ -113,7 +113,7 @@ export default function CodeScriptInstallation() {
         <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
           {/* Header & Content - same as before */}
           <header className="text-center mb-20">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h1 className="text-5xl lg:text-7xl font-bold mb-4 bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Code & Script Installation
             </h1>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
@@ -168,14 +168,14 @@ export default function CodeScriptInstallation() {
                       key={i}
                       className="flex items-start gap-2 text-slate-300 text-sm"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
                       <span>{term}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-500/30 rounded-2xl p-6 backdrop-blur-sm">
+              <div className="bg-linear-to-br from-blue-900/20 to-cyan-900/20 border border-blue-500/30 rounded-2xl p-6 backdrop-blur-sm">
                 <h3 className="text-lg font-semibold text-blue-400 mb-4 flex items-center gap-2">
                   <IndianRupee className="w-5 h-5" /> Pricing
                 </h3>
@@ -212,7 +212,7 @@ export default function CodeScriptInstallation() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => setIsBookModalOpen(true)}
-                className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl font-semibold shadow-lg shadow-blue-900/50 hover:shadow-blue-900/70 transition-all hover:scale-105 active:scale-95"
+                className="group px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-600 rounded-xl font-semibold shadow-lg shadow-blue-900/50 hover:shadow-blue-900/70 transition-all hover:scale-105 active:scale-95"
               >
                 <span className="flex items-center gap-2">
                   Book Services Now{" "}
