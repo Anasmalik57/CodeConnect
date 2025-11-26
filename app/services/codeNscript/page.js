@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Server,
-  Database,
-  Smartphone,
-  FileCheck,
-  IndianRupee,
-  ArrowRight,
-  CheckCircle2,
-  DownloadCloud,
-} from "lucide-react";
+import { Server, Database, Smartphone, FileCheck, IndianRupee, ArrowRight, DownloadCloud, CheckCircle, } from "lucide-react";
 import BookServiceModal from "@/components/Modals/BookServiceModal";
 import InstallOwnCodeModal from "@/components/Modals/InstallOwnCodeModal";
 import { languages, setupTypes, timeSlots } from "@/components/Modals/Data";
@@ -127,7 +118,7 @@ export default function CodeScriptInstallation() {
             <div className="lg:col-span-1">
               <div className="bg-slate-900/50 border border-slate-700/50 rounded-2xl overflow-hidden h-full backdrop-blur-sm">
                 <img
-                  src="/Profilepic.jpg"
+                  src="https://images.pexels.com/photos/10508800/pexels-photo-10508800.jpeg"
                   alt="Code Installation Service"
                   className="w-full h-full object-cover"
                 />
@@ -168,7 +159,7 @@ export default function CodeScriptInstallation() {
                       key={i}
                       className="flex items-start gap-2 text-slate-300 text-sm"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                       <span>{term}</span>
                     </li>
                   ))}
@@ -252,6 +243,7 @@ export default function CodeScriptInstallation() {
             setInstallForm={setInstallForm}
             timeSlots={timeSlots}
             languages={languages}
+            setIsInstallModalOpen={setIsInstallModalOpen}
             handleInstallSubmit={handleInstallSubmit}
           />
         )}

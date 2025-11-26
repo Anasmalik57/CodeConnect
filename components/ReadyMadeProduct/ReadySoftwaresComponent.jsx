@@ -8,12 +8,12 @@ const categories = [
   "All",
   "Food",
   "Travel",
-  "Education",
-  "Healthcare",
-  "Real Estate",
+  "Fitness",
+  "Real Estate",  
   "E-commerce",
   "Finance",
-  "Fitness",
+  "Education",
+  "Healthcare",
 ];
 
 export default function ReadyMadeSoftwarePage() {
@@ -47,14 +47,14 @@ export default function ReadyMadeSoftwarePage() {
         </div>
 
         {/* Filter Section */}
-        <div className="mb-4 bg-white/5 backdrop-blur-xl border border-blue-500/20 rounded-3xl p-6">
+        <div className="mb-4 bg-white/5 backdrop-blur-xl border border-blue-500/20 rounded-3xl p-3.5 md:p-6">
           {/* Category Pills */}
           <div className="flex flex-wrap gap-3 mb-6">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
+                className={`px-6 py-2.5 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 ${
                   selectedCategory === cat
                     ? "bg-linear-to-r from-blue-600 to-sky-500 text-white shadow-lg shadow-blue-500/50"
                     : "bg-white/5 text-blue-300 hover:bg-white/10 border border-blue-500/30"

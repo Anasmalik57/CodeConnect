@@ -14,7 +14,6 @@ import {
   Server,
   Smartphone,
   Shield,
-  Headphones,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -227,15 +226,15 @@ export default function BookServices() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
-            className="mt-20 text-center"
+            className="mt-12 text-center"
           >
-            <button className="group relative px-12 py-5 text-lg font-bold bg-linear-to-r from-blue-600 via-sky-500 to-teal-400 rounded-3xl shadow-2xl shadow-sky-600/50 hover:shadow-sky-500/70 transform hover:scale-105 active:scale-95 transition-all duration-400 overflow-hidden">
+            {/* <button className="group relative px-12 py-5 text-lg font-bold bg-linear-to-r from-blue-600 via-sky-500 to-teal-400 rounded-3xl shadow-2xl shadow-sky-600/50 hover:shadow-sky-500/70 transform hover:scale-105 active:scale-95 transition-all duration-400 overflow-hidden">
               <span className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
               <span className="relative flex items-center gap-3">
                 <Sparkles className="w-6 h-6 group-hover:animate-pulse" />
                 Book a Service Now
               </span>
-            </button>
+            </button> */}
             <p className="mt-6 text-blue-300/70 text-sm">
               Instant booking • Fixed pricing • 24/7 support available
             </p>

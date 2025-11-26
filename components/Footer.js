@@ -1,36 +1,46 @@
 "use client";
 import { useState } from "react";
-import { 
-  Code2, Mail, Phone, MapPin, Github, Linkedin, Twitter, 
-  Instagram, ArrowUpRight, Heart, Send, Sparkles 
+import {
+  Code2,
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+  ArrowUpRight,
+  Heart,
+  Send,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 
 const footerLinks = {
   Company: [
     { name: "About Us", href: "/about" },
-    { name: "Careers", href: "/careers" },
-    { name: "Our Team", href: "/team" },
+    { name: "Careers", href: "/quickLinks/careers" },
+    { name: "Our Team", href: "/quickLinks/team" },
     { name: "Blog", href: "/blog" },
     { name: "How It Works", href: "/quickLinks/how-it-works" },
   ],
   Services: [
-    { name: "Web Development", href: "/services/web" },
-    { name: "App Development", href: "/services/app" },
-    { name: "UI/UX Design", href: "/services/design" },
-    { name: "Consulting", href: "/services/consulting" },
+    { name: "Web Development", href: "/book-services" },
+    { name: "App Development", href: "/book-services" },
+    { name: "UI/UX Design", href: "/book-services" },
+    { name: "Consulting", href: "/book-services" },
   ],
   Resources: [
-    { name: "Documentation", href: "/docs" },
-    { name: "Tutorials", href: "/tutorials" },
-    { name: "Support", href: "/support" },
-    { name: "FAQ", href: "/faq" },
+    { name: "Documentation", href: "/resource/docs" },
+    { name: "Tutorials", href: "/resource/tutorials" },
+    { name: "Support", href: "/resource/support" },
+    { name: "FAQ", href: "/resource/faq" },
   ],
   Legal: [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
-    { name: "Licenses", href: "/licenses" },
+    { name: "Privacy Policy", href: "/legal/privacy" },
+    { name: "Terms of Service", href: "/legal/terms" },
+    { name: "Cookie Policy", href: "/legal/cookies" },
+    { name: "Licenses", href: "/legal/licenses" },
   ],
 };
 
@@ -56,8 +66,14 @@ export default function FooterComponent() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+        <div
+          className="absolute bottom-0 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        />
       </div>
 
       <div className="relative max-w-[1350px] mx-auto px-5 lg:px-8 pt-20 pb-8">
@@ -81,21 +97,28 @@ export default function FooterComponent() {
                 </p>
               </div>
             </Link>
-            
+
             <p className="text-gray-400 leading-relaxed max-w-md">
-              Empowering businesses with cutting-edge digital solutions. 
-              We transform ideas into reality through innovative development and design.
+              Empowering businesses with cutting-edge digital solutions. We
+              transform ideas into reality through innovative development and
+              design.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
-              <a href="mailto:hello@nodeskdeveloper.com" className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors duration-300 group w-fit">
+              <a
+                href="mailto:hello@nodeskdeveloper.com"
+                className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors duration-300 group w-fit"
+              >
                 <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors duration-300">
                   <Mail className="w-4 h-4" />
                 </div>
                 <span className="text-sm">hello@nodeskdeveloper.com</span>
               </a>
-              <a href="tel:+1234567890" className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors duration-300 group w-fit">
+              <a
+                href="tel:+1234567890"
+                className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors duration-300 group w-fit"
+              >
                 <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors duration-300">
                   <Phone className="w-4 h-4" />
                 </div>
@@ -118,7 +141,8 @@ export default function FooterComponent() {
                 <h3 className="text-2xl font-bold text-white">Stay Updated</h3>
               </div>
               <p className="text-gray-400 text-sm">
-                Subscribe to our newsletter for the latest updates, tips, and exclusive offers.
+                Subscribe to our newsletter for the latest updates, tips, and
+                exclusive offers.
               </p>
             </div>
 
@@ -197,10 +221,13 @@ export default function FooterComponent() {
           <p className="text-gray-500 text-sm text-center md:text-left">
             © 2025 NoDeskDeveloper. All rights reserved.
           </p>
-          
+
           <div className="flex items-center gap-2 text-gray-500 text-sm">
             <span>Made with</span>
-            <Heart className="w-4 h-4 text-red-500 animate-pulse" fill="currentColor" />
+            <Heart
+              className="w-4 h-4 text-red-500 animate-pulse"
+              fill="currentColor"
+            />
             <span>by the NoDeskDeveloper Team</span>
           </div>
         </div>

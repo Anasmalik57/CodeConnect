@@ -145,7 +145,7 @@ export default function TechnicalMaintenance() {
             {/* Bottom Status */}
             <div className="mt-10 pt-6 border-t border-blue-500/20 text-center">
               <p className="text-gray-500 text-sm flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 24/7 Monitoring • Instant Alerts • Auto-backups Enabled
               </p>
             </div>
