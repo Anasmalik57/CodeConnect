@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="min-h-screen bg-black text-white overflow-hidden">
+      <div className="min-h-screen bg-black text-white overflow-hidden pb-20">
         {/* Animated Background linear */}
         <div className="fixed inset-0 -z-10">
           <div className="absolute inset-0 bg-linear-to-br from-blue-900/20 via-sky-900/10 to-teal-900/20" />
