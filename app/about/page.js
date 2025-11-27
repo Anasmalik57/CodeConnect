@@ -37,7 +37,7 @@ export default function AboutUsPage() {
               From hiring verified developers to launching ready-made apps —
               <span className="text-cyan-400 font-bold">
                 {" "}
-                CodeConnect delivers everything
+                NoDeskDeveloper delivers everything
               </span>{" "}
               your business needs under one roof.
             </p>
@@ -52,7 +52,7 @@ export default function AboutUsPage() {
                 Who We Are
               </h2>
               <p className="text-xl text-cyan-100 leading-relaxed">
-                CodeConnect is your{" "}
+                NodeskDeveloper is your{" "}
                 <span className="text-cyan-400 font-bold">
                   trusted all-in-one technology partner
                 </span>

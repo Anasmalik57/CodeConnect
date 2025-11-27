@@ -50,7 +50,7 @@ export default function HomePage() {
             <h2 className="text-5xl md:text-6xl sm:pb-2 font-black text-center bg-linear-to-r from-blue-400 to-sky-400 bg-clip-text text-transparent mb-16">
               Why Choose{" "}
               <span className="bg-linear-to-br text-4xl md:text-6xl from-blue-600 via-sky-500 to-teal-600 text-transparent bg-clip-text">
-                CodeConnect?
+                NoDeskDeveloper?
               </span>
             </h2>
 
