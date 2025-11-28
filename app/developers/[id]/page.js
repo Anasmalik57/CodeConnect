@@ -14,7 +14,7 @@ import {
 import Image from "next/image";
 import { developers } from "@/components/Developer/DevListData";
 
-export default function DeveloperDetailPage() {
+export default function DeveloperDetailClient() {
   const params = useParams();
   const router = useRouter();
   const [developer, setDeveloper] = useState(null);
