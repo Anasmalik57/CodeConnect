@@ -1,20 +1,8 @@
 "use client";
 import { useState } from "react";
-import {
-  Code2,
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-  ArrowUpRight,
-  Heart,
-  Send,
-  Sparkles,
-} from "lucide-react";
+import { Code2, Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, ArrowUpRight, Heart, Send, Sparkles, } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const footerLinks = {
   Company: [
@@ -54,6 +42,7 @@ const socialLinks = [
 export default function FooterComponent() {
   const [email, setEmail] = useState("");
   const [hoveredSocial, setHoveredSocial] = useState(null);
+  const pathname = usePathname()
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -62,7 +51,7 @@ export default function FooterComponent() {
   };
 
   return (
-    <footer className="relative bg-linear-to-b from-black via-gray-950 to-black border-t border-blue-500/20 overflow-hidden">
+    <footer className={`relative bg-linear-to-b from-black via-gray-950 to-black border-t border-blue-500/20 overflow-hidden  ${pathname.startsWith('/admin') ? 'hidden' : ''}`}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />

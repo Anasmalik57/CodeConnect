@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Home, Code2, Mail, Menu, X, Sparkles, FolderCode, BookAudio } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", href: "/", icon: Home },
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState("Home");
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -25,7 +27,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`z-50 border-b border-blue-300/70 transition-all duration-500 ${scrolled ? "bg-black/80 backdrop-blur-2xl border-b border-blue-500/30 shadow-xl shadow-blue-900/50": "bg-transparent"}`}>
+      <nav className={`z-50 border-b border-blue-300/70 transition-all duration-500 ${scrolled ? "bg-black/80 backdrop-blur-2xl border-b border-blue-500/30 shadow-xl shadow-blue-900/50": "bg-transparent"} ${pathname.startsWith('/admin') ? 'hidden' : ''}`}>
         <div className="max-w-[1500px] mx-auto px-5 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
