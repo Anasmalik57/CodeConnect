@@ -158,7 +158,7 @@ export default function ProductDetailPage() {
       <div className="max-w-[1380px] mx-auto">
         <div className="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
           {/* Header */}
-          <div className="relativebg-linear-to-r from-blue-900/30 to-purple-900/30 p-6 border-b border-slate-800">
+          <div className="relative bg-linear-to-r from-blue-900/30 to-purple-900/30 p-6 border-b border-slate-800">
             <h1 className="text-2xl font-bold bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               {product.name}
             </h1>
@@ -168,7 +168,7 @@ export default function ProductDetailPage() {
 
             <Link
               href="/softwares-readymade"
-              className="absolute top-1/2 right-8 inline-flex items-center gap-2 text-slate-400 hover:text-white transition mb-6 text-sm"
+              className="absolute top-[40%] hidden  right-10 text-xs border border-white/20 bg-radial-[at_25%_25%] from-white to-zinc-900 to-75% rounded-full md:inline-flex items-center gap-2 text-slate-400 hover:text-white transition mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Apps
