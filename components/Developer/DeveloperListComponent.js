@@ -46,7 +46,7 @@ export default function DevelopersPage() {
     let filtered = developers;
 
     if (searchTerm) {
-      filtered = filtered.filter(
+      filtered = filtered.includes(
         (dev) =>
           dev.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           dev.skills.some((s) => s.toLowerCase().includes(searchTerm.toLowerCase())) ||
