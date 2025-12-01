@@ -1,168 +1,198 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Users, Boxes, TrendingUp, Home, Sparkles } from "lucide-react";
-import { API_BASE } from "@/lib/api";
+import { Users, Package2, Home, Shield, Activity, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [stats, setStats] = useState({
     developers: 0,
     projects: 0,
     totalUsers: 0,
     admins: 0,
-    normalUsers: 0,
   });
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  const API_BASE = "https://nodeskdevbackend.onrender.com/api";
+
   useEffect(() => {
-    const fetchData = async () => {
+    const loadDashboard = async () => {
       try {
-        const [userRes, devRes, projRes, usersRes] = await Promise.all([
-          fetch(`${API_BASE}/me`, { credentials: "include" }),
+        // First: Check if user is authenticated
+        const userRes = await fetch(`${API_BASE}/me`, {
+          credentials: "include",
+        });
+
+        if (!userRes.ok) {
+          router.push("/auth/login");
+          return;
+        }
+
+        const userData = await userRes.json();
+        const currentUser = userData.user || userData.data;
+        setUser(currentUser);
+
+        // Only admins can see full stats
+        if (currentUser.role !== "admin") {
+          setLoading(false);
+          return;
+        }
+
+        // Fetch stats in parallel
+        const [devRes, projRes, usersRes] = await Promise.all([
           fetch(`${API_BASE}/developers`),
           fetch(`${API_BASE}/projects`),
           fetch(`${API_BASE}/users`, { credentials: "include" }),
         ]);
 
-        // Current User
-        if (userRes.ok) {
-          const userData = await userRes.json();
-          setCurrentUser(userData.user || userData.data);
-        }
+        const [devData, projData, usersData] = await Promise.all([
+          devRes.json(),
+          projRes.json(),
+          usersRes.ok ? usersRes.json() : { data: [] },
+        ]);
 
-        // Developers & Projects
-        const devData = await devRes.json();
-        const projData = await projRes.json();
-
-        // All Users (Admin only route)
-        let totalUsers = 0, admins = 0;
-        if (usersRes.ok) {
-          const usersData = await usersRes.json();
-          if (usersData.success && Array.isArray(usersData.data)) {
-            totalUsers = usersData.data.length;
-            admins = usersData.data.filter(u => u.role === "admin").length;
-          }
-        }
+        const totalUsers = Array.isArray(usersData.data) ? usersData.data.length : 0;
+        const admins = Array.isArray(usersData.data)
+          ? usersData.data.filter(u => u.role === "admin").length
+          : 0;
 
         setStats({
           developers: devData.success ? devData.data.length : 0,
           projects: projData.success ? projData.data.length : 0,
           totalUsers,
           admins,
-          normalUsers: totalUsers - admins,
         });
       } catch (err) {
-        console.error("Dashboard fetch error:", err);
+        console.error("Dashboard load failed:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, []);
+    loadDashboard();
+  }, [router]);
 
-  const username = currentUser?.email?.split("@")[0] || "Admin";
+  const username = user?.email?.split("@")[0] || "Admin";
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect
+  }
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header with Welcome + Button */}
-        <div className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-          <div>
-            <h1 className="text-3xl font-bold flex justify-center items-center ">
-              Welcome back,{" "} <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">{username}!</span>
-            </h1>
-            <p className="text-lg text-gray-300 mt-3 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-yellow-400" />
-              Managing the future of freelance development
-            </p>
-          </div>
+    <div className="min-h-screen bg-gray-950 text-white">
+      {/* Background Gradient */}
+      <div className="fixed inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/10 to-gray-950 pointer-events-none" />
 
-          <button
-            onClick={() => router.push("/")}
-            className="flex items-center gap-3 px-6 py-3.5 bg-linear-to-r from-blue-600 to-purple-600 rounded-2xl font-bold hover:shadow-lg hover:shadow-purple-500/30 transition-all hover:scale-105 active:scale-95"
-          >
-            <Home className="w-5 h-5" />
-            Go to Homepage
-          </button>
+      <div className="relative z-10 p-6 lg:p-10 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div>
+              <h1 className="text-4xl font-bold text-white">
+                Welcome back,{" "}
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  {username}
+                </span>
+              </h1>
+              <p className="text-gray-400 mt-2 text-lg">
+                Here's what's happening on your platform today
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => router.push("/")}
+                className="flex items-center gap-2 px-5 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl border border-gray-700 transition-all hover:scale-105"
+              >
+                <Home className="w-5 h-5" />
+                <span className="font-medium">Homepage</span>
+              </button>
+
+              <button
+                onClick={async () => {
+                  await fetch(`${API_BASE}/logout`, {
+                    method: "POST",
+                    credentials: "include",
+                  });
+                  router.push("/");
+                }}
+                className="flex items-center gap-2 px-5 py-3 bg-red-900/50 hover:bg-red-800/70 rounded-xl border border-red-800/50 transition-all hover:scale-105"
+              >
+                <LogOut className="w-5 h-5" />
+                <span className="font-medium">Logout</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Total Developers */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl hover:border-white/20 transition-all">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm font-medium">Total Developers</p>
-                {loading ? (
-                  <div className="h-12 w-20 bg-white/10 rounded-lg mt-3 animate-pulse" />
-                ) : (
-                  <p className="text-5xl font-black text-blue-400 mt-3">{stats.developers}</p>
-                )}
-              </div>
-              <div className="p-4 bg-blue-600/20 rounded-2xl">
-                <Users className="w-10 h-10 text-blue-400" />
-              </div>
+          <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-all">
+            <div className="flex items-center justify-between mb-4">
+              <Users className="w-10 h-10 text-blue-400" />
+              <span className="text-3xl font-bold text-blue-400">{stats.developers}</span>
             </div>
+            <p className="text-gray-400 text-sm">Total Developers</p>
           </div>
 
-          {/* Total Softwares */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl hover:border-white/20 transition-all">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm font-medium">Total Softwares</p>
-                {loading ? (
-                  <div className="h-12 w-20 bg-white/10 rounded-lg mt-3 animate-pulse" />
-                ) : (
-                  <p className="text-5xl font-black text-green-400 mt-3">{stats.projects}</p>
-                )}
-              </div>
-              <div className="p-4 bg-green-600/20 rounded-2xl">
-                <Boxes className="w-10 h-10 text-green-400" />
-              </div>
+          {/* Total Projects */}
+          <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-all">
+            <div className="flex items-center justify-between mb-4">
+              <Package2 className="w-10 h-10 text-green-400" />
+              <span className="text-3xl font-bold text-green-400">{stats.projects}</span>
             </div>
+            <p className="text-gray-400 text-sm">Total Softwares</p>
           </div>
 
-          {/* Total Users Card (NEW) */}
-          <div className="bg-linear-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 backdrop-blur-xl col-span-1 md:col-span-2 lg:col-span-1">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <p className="text-gray-300 text-sm font-medium">Platform Users</p>
-                <p className="text-5xl font-black text-purple-400 mt-3">{stats.totalUsers}</p>
+          {/* Total Users */}
+          {user.role === "admin" && (
+            <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-all">
+              <div className="flex items-center justify-between mb-4">
+                <Shield className="w-10 h-10 text-purple-400" />
+                <span className="text-3xl font-bold text-purple-400">{stats.totalUsers}</span>
               </div>
-              <Users className="w-12 h-12 text-purple-400" />
+              <p className="text-gray-400 text-sm">Platform Users</p>
+              <div className="mt-3 text-xs text-gray-500">
+                <div className="flex justify-between">
+                  <span>Admins</span>
+                  <span className="text-purple-300 font-medium">{stats.admins}</span>
+                </div>
+                <div className="flex justify-between mt-1">
+                  <span>Users</span>
+                  <span className="text-cyan-300 font-medium">{stats.totalUsers - stats.admins}</span>
+                </div>
+              </div>
             </div>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-400">Admins</span>
-                <span className="font-bold text-pink-400">{stats.admins}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Normal Users</span>
-                <span className="font-bold text-cyan-400">{stats.normalUsers}</span>
-              </div>
-            </div>
-          </div>
+          )}
 
-          {/* Platform Active */}
-          <div className="bg-linear-to-br from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 rounded-2xl p-8 backdrop-blur-xl">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-300 text-sm font-medium">Status</p>
-                <p className="text-2xl font-bold text-white mt-4">All Systems Active</p>
-              </div>
-              <TrendingUp className="w-12 h-12 text-cyan-400" />
+          {/* System Status */}
+          <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 backdrop-blur border border-green-800/50 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <Activity className="w-10 h-10 text-green-400" />
+              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
             </div>
+            <p className="text-green-300 font-semibold">All Systems Active</p>
+            <p className="text-gray-500 text-xs mt-1">Last update: {new Date().toLocaleTimeString()}</p>
           </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="text-gray-500 text-sm">
-            Last updated: {new Date().toLocaleString()}
-          </p>
+        {/* Footer */}
+        <div className="mt-16 text-center text-gray-600 text-sm">
+          <p>NoDeskDeveloper Admin Panel © {new Date().getFullYear()}</p>
         </div>
       </div>
     </div>
