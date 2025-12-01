@@ -52,10 +52,10 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-4xl font-bold flex justify-center items-center">
+          <h1 className="text-4xl font-mono font-bold flex justify-start items-center">
             Welcome!{" "}
-            <span className="bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              {" "}
+            <span className="ml-2 italic bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+             
               {currentUser?.email.split("@")[0]}
             </span>{" "}
             😃
@@ -122,7 +122,7 @@ export default function Dashboard() {
                       <p className="text-purple-300 text-sm font-medium">
                         Total Users
                       </p>
-                      <p className="text-lg font-black text-purple-400 mt-3">
+                      <p className="text-5xl font-black text-purple-400 mt-3">
                         {stats?.users}
                       </p>
                     </>
