@@ -52,8 +52,13 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Dashboard
+          <h1 className="text-4xl font-bold flex justify-center items-center">
+            Welcome!{" "}
+            <span className="bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              {" "}
+              {currentUser.email.split("@")[0]}
+            </span>{" "}
+            😃
           </h1>
           <p className="text-gray-400 mt-2">Overview of your platform</p>
         </div>
@@ -64,11 +69,15 @@ export default function Dashboard() {
           <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl hover:border-white/20 transition-all">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm font-medium">Total Developers</p>
+                <p className="text-gray-400 text-sm font-medium">
+                  Total Developers
+                </p>
                 {loading ? (
                   <div className="h-12 w-20 bg-white/10 rounded-lg mt-3 animate-pulse" />
                 ) : (
-                  <p className="text-5xl font-black text-blue-400 mt-3">{stats.developers}</p>
+                  <p className="text-5xl font-black text-blue-400 mt-3">
+                    {stats.developers}
+                  </p>
                 )}
               </div>
               <div className="p-4 bg-blue-600/20 rounded-2xl">
@@ -81,11 +90,15 @@ export default function Dashboard() {
           <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl hover:border-white/20 transition-all">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm font-medium">Total Softwares</p>
+                <p className="text-gray-400 text-sm font-medium">
+                  Total Softwares
+                </p>
                 {loading ? (
                   <div className="h-12 w-20 bg-white/10 rounded-lg mt-3 animate-pulse" />
                 ) : (
-                  <p className="text-5xl font-black text-green-400 mt-3">{stats.projects}</p>
+                  <p className="text-5xl font-black text-green-400 mt-3">
+                    {stats.projects}
+                  </p>
                 )}
               </div>
               <div className="p-4 bg-green-600/20 rounded-2xl">
@@ -95,7 +108,7 @@ export default function Dashboard() {
           </div>
 
           {/* Admin Welcome / Total Users Card */}
-          <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 border border-purple-500/30 rounded-2xl p-8 backdrop-blur-xl hover:border-purple-500/50 transition-all">
+          <div className="bg-linear-to-br from-purple-600/20 to-blue-600/20 border border-purple-500/30 rounded-2xl p-8 backdrop-blur-xl hover:border-purple-500/50 transition-all">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 {loading ? (
@@ -103,19 +116,17 @@ export default function Dashboard() {
                     <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
                     <div className="h-8 w-32 bg-white/10 rounded animate-pulse" />
                   </div>
-                ) : currentUser?.role === "admin" ? (
-                  <>
-                    <p className="text-purple-300 text-sm font-medium">Welcome Admin!</p>
-                    <p className="text-2xl font-bold text-white mt-2 truncate">
-                      {currentUser.email.split("@")[0]}
-                    </p>
-                    <p className="text-xs text-purple-400 mt-1">Managing the platform</p>
-                  </>
                 ) : (
-                  <>
-                    <p className="text-purple-300 text-sm font-medium">Total Users</p>
-                    <p className="text-5xl font-black text-purple-400 mt-3">{stats.users}</p>
-                  </>
+                  currentUser?.role === "admin" && (
+                    <>
+                      <p className="text-purple-300 text-sm font-medium">
+                        Total Users
+                      </p>
+                      <p className="text-lg font-black text-purple-400 mt-3">
+                        {stats?.users}
+                      </p>
+                    </>
+                  )
                 )}
               </div>
               <div className="p-4 bg-purple-600/20 rounded-2xl">
