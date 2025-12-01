@@ -47,7 +47,7 @@ export default function LoginForm() {
               {/* Error Message */}
               {error && (
                 <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-red-400 text-sm animate-pulse">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                  <AlertCircle className="w-5 h-5 shrink-0" />
                   <span>{error}</span>
                 </div>
               )}
@@ -55,7 +55,7 @@ export default function LoginForm() {
               {/* Email Field */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-blue-300/90">
-                  Email / Username
+                  Email
                 </label>
                 <div className="relative group/input">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
