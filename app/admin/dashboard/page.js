@@ -72,10 +72,10 @@ export default function Dashboard() {
         {/* Header with Welcome + Button */}
         <div className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
-            <h1 className="text-5xl font-black bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Welcome back, {username}!
+            <h1 className="text-3xl font-bold flex justify-center items-center ">
+              Welcome back,{" "} <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">{username}!</span>
             </h1>
-            <p className="text-xl text-gray-300 mt-3 flex items-center gap-2">
+            <p className="text-lg text-gray-300 mt-3 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-yellow-400" />
               Managing the future of freelance development
             </p>
