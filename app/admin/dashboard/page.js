@@ -25,10 +25,10 @@ export default function Dashboard() {
           credentials: "include",
         });
 
-        if (!userRes.ok) {
-          router.push("/auth/login");
-          return;
-        }
+        // if (!userRes.ok) {
+        //   router.push("/auth/login");
+        //   return;
+        // }
 
         const userData = await userRes.json();
         const currentUser = userData.user || userData.data;
