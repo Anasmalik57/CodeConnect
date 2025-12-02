@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Star, Clock, IndianRupee, Sparkles, BadgeCheck, Calendar, Award, X, Languages, } from "lucide-react";
+import {
+  IndianRupee,
+  Sparkles,
+  BadgeCheck,
+  Calendar,
+  X,
+  Languages,
+} from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { API_BASE } from "@/lib/api";
 
 const DevCard = ({ filteredDevelopers }) => {
   const [selectedDeveloper, setSelectedDeveloper] = useState(null);
@@ -12,9 +20,18 @@ const DevCard = ({ filteredDevelopers }) => {
     description: "",
   });
 
-  const projectTypes = [ "Web App", "Mobile App", "E-commerce", "Landing Page", "Dashboard", "API Development", "Full Stack Project", "Other", ];
+  const projectTypes = [
+    "Web App",
+    "Mobile App",
+    "E-commerce",
+    "Landing Page",
+    "Dashboard",
+    "API Development",
+    "Full Stack Project",
+    "Other",
+  ];
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleBookClick = (developer) => {
     setSelectedDeveloper(developer);
@@ -34,31 +51,67 @@ const DevCard = ({ filteredDevelopers }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
+
+    // Quick validation (extra safety)
+    if (
+      !formData.clientName ||
+      !formData.email ||
+      !formData.projectType ||
+      !formData.description
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const enquiryData = {
+      clientName: formData.clientName,
+      email: formData.email, // Note: Yeh field email ya phone dono ke liye hai, lekin schema mein email hai – agar phone bhejna hai toh adjust kar lena
+      projectType: formData.projectType,
+      description: formData.description,
       developer: {
+        id: selectedDeveloper._id,
         name: selectedDeveloper.name,
-        hourlyRate: selectedDeveloper.hourlyRate,
-        experience: selectedDeveloper.experience,
         level: selectedDeveloper.level,
+        experience: selectedDeveloper.experience,
+        hourlyRate: selectedDeveloper.hourlyRate,
       },
-      booking: {
-        clientName: formData.clientName,
-        email: formData.email,
-        projectType: formData.projectType,
-        description: formData.description,
-        developerRate: `₹${selectedDeveloper.hourlyRate}/hr`,
-      },
-      timestamp: new Date().toISOString(),
-    });
-    setSelectedDeveloper(null);
+    };
 
-    setTimeout(() => {
-      alert("Your booking request has been submitted!");
-    }, 1000);
+    try {
+      const response = await fetch(`${API_BASE}/enquire-developer`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(enquiryData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSelectedDeveloper(null); // Dialog close
+        setFormData({
+          clientName: "",
+          email: "",
+          projectType: "",
+          description: "",
+        }); // Form reset
+
+        setTimeout(() => {
+          alert("Your enquiry request has been submitted successfully!");
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          alert(result.message || "Something went wrong. Please try again.");
+        }, 3000);
+      }
+    } catch (err) {
+      console.error("Enquiry Error:", err);
+      alert("Network error. Check your connection and try again.");
+    }
   };
-
   const handleCancel = () => {
     setSelectedDeveloper(null);
   };
@@ -105,9 +158,13 @@ const DevCard = ({ filteredDevelopers }) => {
                     >
                       {dev.name}
                     </h3>
-                  <div className="absolute top-8 right-7">
-                    {dev?.available == true ? <div className="size-3 p-1 bg-green-500 rounded-full animate-pulse" /> : <div className="size-3 p-2 bg-red-500 rounded-full animate-pulse" /> }
-                  </div>
+                    <div className="absolute top-8 right-7">
+                      {dev?.available == true ? (
+                        <div className="size-3 p-1 bg-green-500 rounded-full animate-pulse" />
+                      ) : (
+                        <div className="size-3 p-2 bg-red-500 rounded-full animate-pulse" />
+                      )}
+                    </div>
                     {/* Rating */}
                     {/* <div className="flex items-center gap-1 bg-blue-900/50 px-2 py-1 rounded-full">
                       <Star className="size-4 text-yellow-400 fill-current" />
@@ -117,7 +174,9 @@ const DevCard = ({ filteredDevelopers }) => {
                     </div> */}
                   </div>
 
-                  <p className="text-xs text-blue-300 mt-1">{dev?.state} • {dev?.country}</p>
+                  <p className="text-xs text-blue-300 mt-1">
+                    {dev?.state} • {dev?.country}
+                  </p>
 
                   {/* Level Badge */}
                   <span
@@ -137,13 +196,16 @@ const DevCard = ({ filteredDevelopers }) => {
               {/* Skills */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {dev.skills.slice(0, 4).map((skill) => (
-                  <span key={skill} className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md">
+                  <span
+                    key={skill}
+                    className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md"
+                  >
                     {skill}
                   </span>
                 ))}
                 <span className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md">
-                    +{dev?.skills.length - 4}
-                  </span>
+                  +{dev?.skills.length - 4}
+                </span>
               </div>
 
               {/* Stats Grid */}
@@ -170,7 +232,9 @@ const DevCard = ({ filteredDevelopers }) => {
                 <div className="flex flex-col items-center p-2 bg-purple-900/30 rounded-xl border border-purple-500/30">
                   <Languages className="size-4 text-purple-400 mb-1" />
                   <span className="text-xs text-purple-300 pb-1">Language</span>
-                  <span className="text-sm font-bold text-white">{dev?.preferredLanguage}</span>
+                  <span className="text-sm font-bold text-white">
+                    {dev?.preferredLanguage}
+                  </span>
                 </div>
               </div>
 
@@ -194,11 +258,17 @@ const DevCard = ({ filteredDevelopers }) => {
               {/* Action Buttons */}
               <div className="flex gap-3">
                 <div className="flex-1">
-                  <button onClick={() => router.push(`/developers/${dev?._id}`)} className="w-full px-4 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all">
+                  <button
+                    onClick={() => router.push(`/developers/${dev?._id}`)}
+                    className="w-full px-4 py-2 bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
+                  >
                     Book Developer
                   </button>
                 </div>
-                <button onClick={() => handleBookClick(dev)} className="px-4 py-2 bg-transparent border border-blue-500/50 text-white rounded-lg hover:bg-blue-900/30 transition-colors">
+                <button
+                  onClick={() => handleBookClick(dev)}
+                  className="px-4 py-2 bg-transparent border border-blue-500/50 text-white rounded-lg hover:bg-blue-900/30 transition-colors"
+                >
                   Enquire
                 </button>
               </div>
