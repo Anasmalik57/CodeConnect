@@ -71,11 +71,14 @@ const ProductCard = ({ filteredProducts }) => {
               </div>
 
               <div className="flex flex-wrap gap-1.5">
-                {(Array.isArray(product.tech) ? product.tech : product.tech?.split(", ") || []).map((tech) => (
+                {(Array.isArray(product.tech) ? product.tech : product.tech?.split(", ") || []).slice(0,4).map((tech) => (
                   <span key={tech} className="text-xs px-2 py-1 bg-slate-800/60 text-slate-300 rounded-md border border-slate-700/50">
                     {tech}
                   </span>
                 ))}
+                <span  className="text-xs px-2 py-1 bg-slate-800/60 text-slate-300 rounded-md border border-slate-700/50">
+                    {product?.tech.length - 4 } +
+                  </span>
               </div>
 
               <div className="pt-4 border-t border-slate-700/50 space-y-2">
