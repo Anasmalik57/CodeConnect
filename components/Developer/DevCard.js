@@ -105,8 +105,8 @@ const DevCard = ({ filteredDevelopers }) => {
                     >
                       {dev.name}
                     </h3>
-                  <div className="flex items-center">
-                    {dev?.available == true ? <div className="size-3 p-2 bg-green-500 rounded-full animate-pulse" /> : <div className="size-3 p-2 bg-red-500 rounded-full animate-pulse" /> }
+                  <div className="absolute top-5 right-5">
+                    {dev?.available == true ? <div className="size-3 p-1 bg-green-500 rounded-full animate-pulse" /> : <div className="size-3 p-2 bg-red-500 rounded-full animate-pulse" /> }
                   </div>
                     {/* Rating */}
                     {/* <div className="flex items-center gap-1 bg-blue-900/50 px-2 py-1 rounded-full">
@@ -136,14 +136,14 @@ const DevCard = ({ filteredDevelopers }) => {
 
               {/* Skills */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {dev.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md"
-                  >
+                {dev.skills.slice(0,5).map((skill) => (
+                  <span key={skill} className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md">
                     {skill}
                   </span>
                 ))}
+                <span className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md">
+                    +{dev?.skills.length - 4}
+                  </span>
               </div>
 
               {/* Stats Grid */}
