@@ -138,7 +138,7 @@ export default function BookingDetail() {
               <div className="space-y-3">
                 <h3 className="text-xl font-bold text-white">Developer Information</h3>
                 <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
-                  <Code className="size-5 text-purple-400" />
+                  <User className="size-5 text-purple-400" />
                   <span>{booking.developer.name} ({booking.developer.level})</span>
                 </div>
                 <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
@@ -195,11 +195,11 @@ export default function BookingDetail() {
                   onChange={(e) => setNewStatus(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
                 >
-                  <option value="Pending">Pending</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="Pending" className="bg-black">Pending</option>
+                  <option value="Confirmed" className="bg-black">Confirmed</option>
+                  <option value="In Progress" className="bg-black">In Progress</option>
+                  <option value="Completed" className="bg-black">Completed</option>
+                  <option value="Cancelled" className="bg-black">Cancelled</option>
                 </select>
                 <button
                   onClick={handleUpdateStatus}
