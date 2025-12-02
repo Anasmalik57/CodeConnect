@@ -190,23 +190,42 @@ export default function DeveloperDetailPage() {
             <input type="text" name="country" value={developer.country} onChange={handleChange} placeholder="Country" className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition" required />
             
             <select name="availability" value={developer.availability} onChange={handleChange} className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500/60 outline-none transition">
-              <option>Full-time</option>
-              <option>Part-time</option>
-              <option>Contract</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
             </select>
 
             <select name="level" value={developer.level} onChange={handleChange} className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500/60 outline-none transition">
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Expert</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Expert">Expert</option>
             </select>
 
-            <select name="preferredLanguage" value={developer.preferredLanguage} onChange={handleChange} className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500/60 outline-none transition">
-              <option>English</option>
-              <option>Hindi</option>
-              <option>Spanish</option>
-              <option>Other</option>
+           <select name="preferredLanguage" value={developer.preferredLanguage} onChange={handleChange} className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500/60 outline-none transition">
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Other">Other</option>
             </select>
+
+            <div className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between">
+              <span className="text-gray-300">Available for Work</span>
+              <button
+                type="button"
+                onClick={() => setDeveloper((prev) => ({ ...prev, available: !prev.available }))}
+                className={`relative w-14 h-7 rounded-full transition-colors ${
+                  developer.available ? 'bg-green-500' : 'bg-gray-600'
+                }`}
+              >
+                <span
+                  className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${
+                    developer.available ? 'translate-x-7' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
 
           {/* Buttons */}
