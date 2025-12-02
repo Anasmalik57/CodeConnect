@@ -10,14 +10,20 @@ import {
   ArrowLeft,
   Sparkles,
   TrendingUp,
+  Globe,
+  MapPin,
+  Languages,
 } from "lucide-react";
 import Image from "next/image";
-import { developers } from "@/components/Developer/DevListData";
+
+const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
 
 export default function DeveloperDetailClient() {
   const params = useParams();
   const router = useRouter();
   const [developer, setDeveloper] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     clientName: "",
     email: "",
@@ -39,12 +45,28 @@ export default function DeveloperDetailClient() {
   ];
 
   useEffect(() => {
-    const dev = developers.find((d) => d.id === parseInt(params.id));
-    if (dev) {
-      setDeveloper(dev);
-    } else {
-      // router.push("/developers");
-      alert("Hello 😃")
+    const fetchDeveloper = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_BASE}/developer/${params.id}`);
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          setDeveloper(data.data);
+        } else {
+          setError("Developer not found");
+          // setTimeout(() => router.push("/developers"), 2000);
+        }
+      } catch (err) {
+        setError("Failed to fetch developer details");
+        console.error("Error fetching developer:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (params.id) {
+      fetchDeveloper();
     }
   }, [params.id, router]);
 
@@ -60,7 +82,7 @@ export default function DeveloperDetailClient() {
     e.preventDefault();
     console.log({
       developer: {
-        id: developer.id,
+        id: developer._id,
         name: developer.name,
         hourlyRate: developer.hourlyRate,
         experience: developer.experience,
@@ -80,10 +102,29 @@ export default function DeveloperDetailClient() {
     alert("Booking request submitted! Check console for details.");
   };
 
-  if (!developer) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <div className="text-center">
+          <div className="inline-block size-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-white text-xl">Loading developer details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !developer) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-xl mb-4">{error || "Developer not found"}</div>
+          <button
+            onClick={() => router.push("/developers")}
+            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
+          >
+            Back to Developers
+          </button>
+        </div>
       </div>
     );
   }
@@ -132,16 +173,12 @@ export default function DeveloperDetailClient() {
                     <h1 className="text-3xl font-bold text-white mb-2">
                       {developer.name}
                     </h1>
-                    <p className="text-sm text-gray-400 mb-4">Remote • India</p>
+                    <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
+                      <MapPin className="size-4" />
+                      <span>{developer.state}, {developer.country}</span>
+                    </div>
 
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
-                        <Star className="size-3.5 text-yellow-400 fill-current" />
-                        <span className="text-sm text-white font-medium">
-                          {developer.rating}
-                        </span>
-                      </div>
-
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span
                         className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
                           developer.level === "Expert"
@@ -153,6 +190,15 @@ export default function DeveloperDetailClient() {
                       >
                         {developer.level}
                       </span>
+
+                      {developer.available && (
+                        <div className="flex items-center gap-1.5 bg-green-500/10 px-3 py-1.5 rounded-full border border-green-500/20">
+                          <div className="size-2 bg-green-400 rounded-full animate-pulse" />
+                          <span className="text-xs text-green-400 font-medium">
+                            Available
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -190,20 +236,29 @@ export default function DeveloperDetailClient() {
                   </div>
                 </div>
 
-                {/* Availability Badge */}
-                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8">
-                  <BadgeCheck
-                    className={`size-4 ${
+                {/* Additional Info */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                  <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+                    <BadgeCheck className={`size-5 ${
                       developer.availability === "Full-time"
                         ? "text-blue-400"
                         : developer.availability === "Part-time"
                         ? "text-yellow-400"
                         : "text-green-400"
-                    }`}
-                  />
-                  <span className="text-sm text-gray-300">
-                    {developer.availability}
-                  </span>
+                    }`} />
+                    <div>
+                      <p className="text-xs text-gray-400">Availability</p>
+                      <p className="text-sm text-white font-medium">{developer.availability}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+                    <Languages className="size-5 text-purple-400" />
+                    <div>
+                      <p className="text-xs text-gray-400">Language</p>
+                      <p className="text-sm text-white font-medium">{developer.preferredLanguage}</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Skills */}
@@ -212,9 +267,9 @@ export default function DeveloperDetailClient() {
                     Technical Skills
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {developer.skills.map((skill) => (
+                    {developer.skills.map((skill, index) => (
                       <span
-                        key={skill}
+                        key={index}
                         className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm text-white transition-colors"
                       >
                         {skill}
@@ -247,7 +302,7 @@ export default function DeveloperDetailClient() {
                       onChange={handleInputChange}
                       placeholder="Your name"
                       required
-                      className=" w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all"
                     />
                     <input
                       type="email"
@@ -256,7 +311,7 @@ export default function DeveloperDetailClient() {
                       onChange={handleInputChange}
                       placeholder="Email address"
                       required
-                      className=" w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all"
                     />
                   </div>
                   <div className="flex gap-4 justify-between">
