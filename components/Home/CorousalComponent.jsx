@@ -75,7 +75,7 @@ export default function PremiumCarousel() {
             </Link>
 
             <Link
-              href="/software"
+              href="/softwares-readymade"
               className=" bg-white/10 flex justify-center backdrop-blur-xl border-2 border-white/50 rounded-2xl font-bold hover:bg-white/20 hover:border-white/70 transition-all duration-500 hover:scale-105"
             >
               Explore{" "}

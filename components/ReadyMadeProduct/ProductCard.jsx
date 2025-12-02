@@ -3,6 +3,7 @@ import { Share2, Play, ShoppingCart, Monitor, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { RequestDemoDialog } from "../DialogBoxes/RequestDemoDialog";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ProductCard = ({ filteredProducts }) => {
   const [demoProduct, setDemoProduct] = useState(null);
@@ -34,9 +35,11 @@ const ProductCard = ({ filteredProducts }) => {
             <div className="absolute inset-0 bg-linear-to-br from-blue-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-blue-500/10 group-hover:via-purple-500/5 group-hover:to-blue-500/10 transition-all duration-700 pointer-events-none" />
 
             <div className="relative h-48 overflow-hidden bg-slate-800/50">
-              <img
+              <Image
                 src={product.screenshots?.[0] || "/placeholder.jpg"}
                 alt={product.name}
+                width={1920}
+                height={1080}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/40 to-transparent" />

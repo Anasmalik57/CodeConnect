@@ -8,7 +8,7 @@ const navLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Hire Developers", href: "/developers", icon: Code2 },
   { name: "Softwares", href: "/softwares-readymade", icon: FolderCode  },
-  { name: "Book Services", href: "/book-services", icon: FolderCode  },
+  { name: "Our Services", href: "/book-services", icon: FolderCode  },
   { name: "About", href: "/about", icon: BookAudio   },
   { name: "Contact", href: "/contact", icon: Mail },
 ];
