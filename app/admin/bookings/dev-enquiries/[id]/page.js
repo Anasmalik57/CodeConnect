@@ -206,10 +206,10 @@ export default function EnquiryDetail() {
                   onChange={(e) => setNewStatus(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
                 >
-                  <option value="New">New</option>
-                  <option value="Reviewed">Reviewed</option>
-                  <option value="Contacted">Contacted</option>
-                  <option value="Closed">Closed</option>
+                  <option value="New" className="bg-black">New</option>
+                  <option value="Reviewed" className="bg-black">Reviewed</option>
+                  <option value="Contacted" className="bg-black">Contacted</option>
+                  <option value="Closed" className="bg-black">Closed</option>
                 </select>
                 <button
                   onClick={handleUpdateStatus}
