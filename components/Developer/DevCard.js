@@ -105,14 +105,16 @@ const DevCard = ({ filteredDevelopers }) => {
                     >
                       {dev.name}
                     </h3>
-
+                  <div className="flex items-center">
+                    {dev?.available == true ? <div className="size-3 p-2 bg-green-500 rounded-full animate-pulse" /> : <div className="size-3 p-2 bg-red-500 rounded-full animate-pulse" /> }
+                  </div>
                     {/* Rating */}
-                    <div className="flex items-center gap-1 bg-blue-900/50 px-2 py-1 rounded-full">
+                    {/* <div className="flex items-center gap-1 bg-blue-900/50 px-2 py-1 rounded-full">
                       <Star className="size-4 text-yellow-400 fill-current" />
                       <span className="text-sm text-white font-semibold">
-                        {dev.rating}
+                        {Math.floor(Math.random()*5)+1}
                       </span>
-                    </div>
+                    </div> */}
                   </div>
 
                   <p className="text-sm text-blue-300 mt-1">Remote • India</p>
