@@ -5,7 +5,7 @@ import { API_BASE } from "@/lib/api";
 
 export const RequestDemoDialog = ({ product, isOpen, onClose }) => {
 
-  
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -76,7 +76,7 @@ export const RequestDemoDialog = ({ product, isOpen, onClose }) => {
       alert(result.message || "Something went wrong. Please try again.");
     }
   } catch (err) {
-    console.error("Demo Request Error:", err);
+    console.error("Demo Request Error->", err);
     alert("Network error. Please check your connection and try again.");
   }
 };
