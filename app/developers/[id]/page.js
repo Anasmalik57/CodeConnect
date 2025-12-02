@@ -16,9 +16,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_BASE_URL ||
-  "https://nodeskdevbackend.onrender.com/api";
+const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
 
 export default function DeveloperDetailClient() {
   const params = useParams();
@@ -80,77 +78,70 @@ export default function DeveloperDetailClient() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // Validation (extra safety)
-    if (
-      !formData.clientName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.projectType ||
-      !formData.budget ||
-      !formData.description
-    ) {
-      alert("Please fill all fields");
-      return;
-    }
+  // Validation (extra safety)
+  if (!formData.clientName || !formData.email || !formData.phone || !formData.projectType || !formData.budget || !formData.description) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    const bookingData = {
-      clientName: formData.clientName,
-      email: formData.email,
-      phone: formData.phone,
-      projectType: formData.projectType,
-      estimatedBudget: formData.budget,
-      description: formData.description,
-      developerRate: `₹${developer.hourlyRate}/hr`, // optional, just for display
-      developer: {
-        id: developer._id,
-        name: developer.name,
-        hourlyRate: developer.hourlyRate,
-        experience: developer.experience,
-        level: developer.level,
+  const bookingData = {
+    clientName: formData.clientName,
+    email: formData.email,
+    phone: formData.phone,
+    projectType: formData.projectType,
+    estimatedBudget: formData.budget,
+    description: formData.description,
+    developerRate: `₹${developer.hourlyRate}/hr`, // optional, just for display
+    developer: {
+      id: developer._id,
+      name: developer.name,
+      hourlyRate: developer.hourlyRate,
+      experience: developer.experience,
+      level: developer.level,
+    },
+  };
+
+  try {
+    setLoading(true); // optional: reuse loading state ya alag bana sakta hai
+
+    const response = await fetch(`${API_BASE}/book-developer`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    };
+      body: JSON.stringify(bookingData),
+    });
 
-    try {
-      setLoading(true); // optional: reuse loading state ya alag bana sakta hai
+    const result = await response.json();
 
-      const response = await fetch(`${API_BASE}/book-developer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
+    if (response.ok && result.success) {
+      alert("Booking request sent successfully! We'll contact you soon.");
+      
+      // Optional: Reset form
+      setFormData({
+        clientName: "",
+        email: "",
+        phone: "",
+        projectType: "",
+        budget: "",
+        description: "",
       });
 
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        alert("Booking request sent successfully! We'll contact you soon.");
-
-        // Optional: Reset form
-        setFormData({
-          clientName: "",
-          email: "",
-          phone: "",
-          projectType: "",
-          budget: "",
-          description: "",
-        });
-
-        // Optional: Redirect to thank you or my-bookings page
-        // router.push("/thank-you");
-      } else {
-        alert(result.message || "Something went wrong. Try again.");
-      }
-    } catch (err) {
-      console.error("Booking Error:", err);
-      alert("Network error. Please check your internet and try again.");
-    } finally {
-      setLoading(false);
+      // Optional: Redirect to thank you or my-bookings page
+      // router.push("/thank-you");
+    } else {
+      alert(result.message || "Something went wrong. Try again.");
     }
-  };
+  } catch (err) {
+    console.error("Booking Error:", err);
+    alert("Network error. Please check your internet and try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) {
     return (
@@ -167,9 +158,7 @@ export default function DeveloperDetailClient() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-xl mb-4">
-            {error || "Developer not found"}
-          </div>
+          <div className="text-red-500 text-xl mb-4">{error || "Developer not found"}</div>
           <button
             onClick={() => router.push("/developers")}
             className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
@@ -227,9 +216,7 @@ export default function DeveloperDetailClient() {
                     </h1>
                     <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
                       <MapPin className="size-4" />
-                      <span>
-                        {developer.state}, {developer.country}
-                      </span>
+                      <span>{developer.state}, {developer.country}</span>
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap">
@@ -293,20 +280,16 @@ export default function DeveloperDetailClient() {
                 {/* Additional Info */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                   <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
-                    <BadgeCheck
-                      className={`size-5 ${
-                        developer.availability === "Full-time"
-                          ? "text-blue-400"
-                          : developer.availability === "Part-time"
-                          ? "text-yellow-400"
-                          : "text-green-400"
-                      }`}
-                    />
+                    <BadgeCheck className={`size-5 ${
+                      developer.availability === "Full-time"
+                        ? "text-blue-400"
+                        : developer.availability === "Part-time"
+                        ? "text-yellow-400"
+                        : "text-green-400"
+                    }`} />
                     <div>
                       <p className="text-xs text-gray-400">Availability</p>
-                      <p className="text-sm text-white font-medium">
-                        {developer.availability}
-                      </p>
+                      <p className="text-sm text-white font-medium">{developer.availability}</p>
                     </div>
                   </div>
 
@@ -314,9 +297,7 @@ export default function DeveloperDetailClient() {
                     <Languages className="size-5 text-purple-400" />
                     <div>
                       <p className="text-xs text-gray-400">Language</p>
-                      <p className="text-sm text-white font-medium">
-                        {developer.preferredLanguage}
-                      </p>
+                      <p className="text-sm text-white font-medium">{developer.preferredLanguage}</p>
                     </div>
                   </div>
                 </div>
@@ -434,15 +415,11 @@ export default function DeveloperDetailClient() {
                     </span>
                   </div>
 
-                  <button type="submit" disabled={loading} className={`w-full py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 ${ loading ? "opacity-80 cursor-not-allowed" : "hover:from-blue-500 hover:to-purple-500 shadow-blue-500/40"}`}>
-                    {loading ? (
-                      <>
-                        <div className="size-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Sending...
-                      </>
-                    ) : (
-                      "Submit Request"
-                    )}
+                  <button
+                    type="submit"
+                    className="w-full py-3 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+                  >
+                    Submit Request
                   </button>
                 </form>
               </div>
