@@ -5,6 +5,7 @@ import { Server, Database, Smartphone, FileCheck, IndianRupee, ArrowRight, Downl
 import BookServiceModal from "@/components/Modals/BookServiceModal";
 import InstallOwnCodeModal from "@/components/Modals/InstallOwnCodeModal";
 import { languages, setupTypes, timeSlots } from "@/components/Modals/Data";
+import { API_BASE } from "@/lib/api";
 
 export default function CodeScriptInstallation() {
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
@@ -66,20 +67,51 @@ export default function CodeScriptInstallation() {
     setIsBookModalOpen(false);
   };
 
-  //   handleInstallSubmit
-  const handleInstallSubmit = (e) => {
-    e.preventDefault();
-    console.table({
-      "Product Link/Name": installForm.productLink || "Not provided",
-      "Coding Language": installForm.codingLanguage || "Not specified",
-      "Setup Type": installForm.setupType,
-      "Preferred Time": installForm.preferredTime || "Not selected",
-      "Communication Language": installForm.communicationLang,
-      "Additional Notes": installForm.notes || "None",
-    });
-    alert("Install Own Code request submitted! Check console.");
-    setIsInstallModalOpen(false);
+//   handleInstallSubmit
+const handleInstallSubmit = async (e) => {
+  e.preventDefault();
+
+  // Yeh data backend ke schema ke exact match mein bhej rahe hain
+  const payload = {
+    productLinkOrName: installForm.productLink,
+    setupType: installForm.setupType,
+    codingLanguage: installForm.codingLanguage,
+    preferredLanguage: [installForm.communicationLang], // array chahiye tha schema mein
+    communicationLanguage: installForm.communicationLang,
+    preferredTime: installForm.preferredTime,
+    additionalNotes: installForm.notes || "",
   };
+
+  try {
+    const res = await fetch(`${API_BASE}/install-own-code`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+
+    if (res.ok) {
+      alert("Request submitted successfully! We'll contact you soon.");
+      setIsInstallModalOpen(false);
+      setInstallForm({
+        productLink: "",
+        codingLanguage: "",
+        setupType: "Web Only",
+        preferredTime: "",
+        communicationLang: "English",
+        notes: "",
+      });
+    } else {
+      alert("Error: " + (result.message || "Something went wrong"));
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error! Please try again.");
+  }
+};
 
   const requirements = [
     { icon: Server, label: "Hosting/VPS Access" },
