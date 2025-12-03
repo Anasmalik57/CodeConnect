@@ -60,7 +60,7 @@ export default function AdminProjectEstimationDetail() {
       alert("Deleted successfully");
       router.push("/admin/bookings/projectEstimations");
     } catch (err) {
-      alert("Delete failed");
+      alert("Delete failed!");
     } finally {
       setDeleting(false);
     }
