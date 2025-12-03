@@ -21,9 +21,8 @@ export default function AdminProjectEstimations() {
       } finally {
         setLoading(false);
       }
-
-      fetchEstimates();
     };
+    fetchEstimates();
   }, []);
 
   if (loading)
