@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Code2, Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, ArrowUpRight, Heart, Send, Sparkles, } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaWhatsapp } from "react-icons/fa";
 
 const footerLinks = {
   Company: [
@@ -118,7 +119,7 @@ export default function FooterComponent() {
                 className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors duration-300 group w-fit"
               >
                 <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors duration-300">
-                  <Phone className="w-4 h-4" />
+                  <FaWhatsapp className="w-4 h-4" />
                 </div>
                 <span className="text-sm">+91 8121923831</span>
               </Link>
