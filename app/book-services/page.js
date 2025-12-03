@@ -60,30 +60,30 @@ const services = [
     tags: ["Dev", "Ops", "Sec"],
     link: "/services/project-estimations",
   },
-  {
-    icon: Palette,
-    title: "UI/UX Design Services",
-    tags: ["Dev", "Ops", "Sec"],
-    link: "/services/ui-services",
-  },
-  {
-    icon: Server,
-    title: "Hosting Setup & Server Management",
-    tags: ["Dev", "Ops", "Sec"],
-    link: "/services/hosting-services",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile App Publishing Support",
-    tags: ["Dev", "Ops", "Sec"],
-    link: "/services/app-hosting-service",
-  },
-  {
-    icon: Shield,
-    title: "Security & Malware Removal",
-    tags: ["Dev", "Ops", "Sec"],
-    link: "/services/security-services",
-  },
+  // {
+  //   icon: Palette,
+  //   title: "UI/UX Design Services",
+  //   tags: ["Dev", "Ops", "Sec"],
+  //   link: "/services/ui-services",
+  // },
+  // {
+  //   icon: Server,
+  //   title: "Hosting Setup & Server Management",
+  //   tags: ["Dev", "Ops", "Sec"],
+  //   link: "/services/hosting-services",
+  // },
+  // {
+  //   icon: Smartphone,
+  //   title: "Mobile App Publishing Support",
+  //   tags: ["Dev", "Ops", "Sec"],
+  //   link: "/services/app-hosting-service",
+  // },
+  // {
+  //   icon: Shield,
+  //   title: "Security & Malware Removal",
+  //   tags: ["Dev", "Ops", "Sec"],
+  //   link: "/services/security-services",
+  // },
 ];
 
 const container = {
