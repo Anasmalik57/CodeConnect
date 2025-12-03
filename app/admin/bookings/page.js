@@ -1,22 +1,5 @@
 "use client";
-
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Globe,
-  Users,
-  Code2,
-  Upload,
-  MessageSquare,
-  Wrench,
-  Bug,
-  Calculator,
-  Palette,
-  Server,
-  Smartphone,
-  Shield,
-  MoreVertical,
-} from "lucide-react";
 
 const services = [
   {
@@ -34,11 +17,11 @@ const services = [
     title: "Product Demo Requests",
     route: "/admin/bookings/productsdemo-requests",
   },
-  // {
-  //   id: 4,
-  //   title: "Product Buying Enquiries",
-  //   route: "/services/consultancy",
-  // },
+  {
+    id: 4,
+    title: "Product Buying Enquiries",
+    route: "/admin/bookings/productsdemo-requests",
+  },
   // {
   //   id: 5,
   //   icon: Wrench,
@@ -74,9 +57,13 @@ export default function ServicesGrid() {
                 className={`relative group cursor-pointer`}
               >
                 {/* Card Container */}
-                <div className={` relative overflow-hidden h-fit  rounded-3xl p-6 bg-linear-to-br from-slate-900/50 to-slate-950/50 border border-slate-800/50 backdrop-blur-xl transition-all duration-500 ease-out hover:border-cyan-500/30`}>
+                <div
+                  className={` relative overflow-hidden h-fit  rounded-3xl p-6 bg-linear-to-br from-slate-900/50 to-slate-950/50 border border-slate-800/50 backdrop-blur-xl transition-all duration-500 ease-out hover:border-cyan-500/30`}
+                >
                   {/* Gradient Overlay on Hover */}
-                  <div className={` absolute inset-0 bg-linear-to-br from-cyan-500/5 to-blue-500/5 transition-opacity duration-500 `}/>
+                  <div
+                    className={` absolute inset-0 bg-linear-to-br from-cyan-500/5 to-blue-500/5 transition-opacity duration-500 `}
+                  />
                   <div className="relative z-10">
                     {/* Title */}
                     <h3 className="text-white font-semibold text-base leading-snug">

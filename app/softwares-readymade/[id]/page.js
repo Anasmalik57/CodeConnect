@@ -151,20 +151,41 @@ export default function ProductDetailPage() {
 const handleSubmit = (e) => {
   e.preventDefault();
 
-  // Ye nayi lines add kar do
   console.log("=== CLIENT REQUEST DETAILS ===");
+
+  // Form Fields
   console.log("Name:", formData.name);
   console.log("Contact:", formData.contact);
   console.log("Message:", formData.message);
-  console.log("Selected Addons:", selectedAddons.map(a => `${a.label} (₹${a.cost})`));
+
+  // Product Details
+  console.log("Product Name:", product.name);
+  console.log("Live Demo Link:", product.demoLink);
+  console.log("Platforms:", product.platforms?.join(", "));
+  console.log("Technologies:", 
+    Array.isArray(product.tech) 
+      ? product.tech.join(", ") 
+      : product.tech
+  );
+
+  // Addons
+  console.log("Selected Addons:", 
+    selectedAddons.length
+      ? selectedAddons.map(a => `${a.label} (₹${a.cost})`)
+      : "No addons selected"
+  );
+
+  // Pricing
   console.log("Base Price: ₹", basePrice);
   console.log("Addons Total: ₹", addonsTotal);
   console.log("Service Fee: ₹", Math.round(serviceFee));
   console.log("FINAL TOTAL: ₹", Math.round(total));
-  console.log("===============================");
+
+  console.log("================================");
 
   alert("Request sent successfully! We will contact you soon.");
 };
+
 
   return (
     <div className="min-h-screen bg-black text-white py-6 px-4 sm:px-6 lg:px-8">
