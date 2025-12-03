@@ -37,6 +37,11 @@ const services = [
     title: "Tech Consult Enquiries",
     route: "/admin/bookings/techConsult",
   },
+  {
+    id: 8,
+    title: "Technical Maintenance Enquiries",
+    route: "/admin/bookings/tech-maintenance",
+  },
 ];
 
 export default function ServicesGrid() {
