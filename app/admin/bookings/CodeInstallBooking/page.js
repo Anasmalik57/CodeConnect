@@ -87,7 +87,7 @@ export default function AdminCodeInstallBookings() {
                   </div>
 
                   <button
-                    onClick={() => router.push(`/admin/bookings/code-install-bookings/${booking._id}`)}
+                    onClick={() => router.push(`/admin/bookings/CodeInstallBooking/${booking._id}`)}
                     className="w-full mt-4 py-3 bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-500 rounded-xl font-bold text-white shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
                   >
                     <Eye className="w-5 h-5" />
