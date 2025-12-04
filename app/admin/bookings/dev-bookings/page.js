@@ -1,10 +1,7 @@
-// File: app/admin/bookings/page.js
-// This is the list component that fetches all bookings and displays them in eye-catching cards
-
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Calendar, User, Code, IndianRupee, AlertCircle, CheckCircle, Clock, Sparkles } from "lucide-react";
+import { Calendar, Code, AlertCircle } from "lucide-react";
 
 const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
 
@@ -36,11 +33,16 @@ export default function AdminDevBookings() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Confirmed": return "bg-green-500/10 border-green-500/20 text-green-400";
-      case "In Progress": return "bg-blue-500/10 border-blue-500/20 text-blue-400";
-      case "Completed": return "bg-purple-500/10 border-purple-500/20 text-purple-400";
-      case "Cancelled": return "bg-red-500/10 border-red-500/20 text-red-400";
-      default: return "bg-yellow-500/10 border-yellow-500/20 text-yellow-400";
+      case "Confirmed":
+        return "bg-green-500/10 border-green-500/20 text-green-400";
+      case "In Progress":
+        return "bg-blue-500/10 border-blue-500/20 text-blue-400";
+      case "Completed":
+        return "bg-purple-500/10 border-purple-500/20 text-purple-400";
+      case "Cancelled":
+        return "bg-red-500/10 border-red-500/20 text-red-400";
+      default:
+        return "bg-yellow-500/10 border-yellow-500/20 text-yellow-400";
     }
   };
 
@@ -64,83 +66,90 @@ export default function AdminDevBookings() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-20 pb-16 px-4 md:px-6">
-      <div className="max-w-[1380px] mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Sparkles className="size-6 text-blue-400" />
-          <h1 className="text-3xl font-bold">All Bookings</h1>
-        </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {bookings.map((booking) => (
+          <div
+            key={booking._id}
+            className="relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-white/10 rounded-3xl p-6 overflow-hidden hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300"
+          >
+            {/* Glow Effects */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bookings.map((booking) => (
-            <div
-              key={booking._id}
-              className="relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-white/10 rounded-3xl p-6 overflow-hidden hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300"
-            >
-              {/* Glow Effects */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
-
-              <div className="relative space-y-4">
-                {/* Header */}
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-1">{booking.clientName}</h3>
-                    <p className="text-sm text-gray-400">Client</p>
-                  </div>
-                  <span
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}
-                  >
-                    {booking.status}
-                  </span>
+            <div className="relative space-y-4">
+              {/* Header */}
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    {booking.clientName}
+                  </h3>
+                  <p className="text-sm text-gray-400">Client</p>
                 </div>
-
-                {/* Developer Info */}
-                <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
-                  <Code className="size-5 text-purple-400" />
-                  <div>
-                    <p className="text-sm text-white font-medium">{booking.developer.name}</p>
-                    <p className="text-xs text-gray-400">Developer ({booking.developer.level})</p>
-                  </div>
-                </div>
-
-                {/* Project Quick Stats */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3">
-                    <p className="text-xs text-gray-400 mb-1">Project Type</p>
-                    <p className="text-sm text-white font-medium">{booking.projectType}</p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3">
-                    <p className="text-xs text-gray-400 mb-1">Budget</p>
-                    <p className="text-sm text-white font-medium">₹{booking.estimatedBudget}</p>
-                  </div>
-                </div>
-
-                {/* Date */}
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <Calendar className="size-4" />
-                  <span>{new Date(booking.createdAt).toLocaleDateString()}</span>
-                </div>
-
-                {/* View Details Button */}
-                <button
-                  onClick={() => router.push(`/admin/bookings/dev-bookings/${booking?._id}`)}
-                  className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+                <span
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium ${getStatusColor(
+                    booking.status
+                  )}`}
                 >
-                  View Details
-                </button>
+                  {booking.status}
+                </span>
               </div>
-            </div>
-          ))}
-        </div>
 
-        {bookings.length === 0 && (
-          <div className="text-center text-gray-400 mt-12">
-            <AlertCircle className="size-12 mx-auto mb-4" />
-            <p>No bookings found</p>
+              {/* Developer Info */}
+              <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+                <Code className="size-5 text-purple-400" />
+                <div>
+                  <p className="text-sm text-white font-medium">
+                    {booking.developer.name}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    Developer ({booking.developer.level})
+                  </p>
+                </div>
+              </div>
+
+              {/* Project Quick Stats */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+                  <p className="text-xs text-gray-400 mb-1">Project Type</p>
+                  <p className="text-sm text-white font-medium">
+                    {booking.projectType}
+                  </p>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+                  <p className="text-xs text-gray-400 mb-1">Budget</p>
+                  <p className="text-sm text-white font-medium">
+                    ₹{booking.estimatedBudget}
+                  </p>
+                </div>
+              </div>
+
+              {/* Date */}
+              <div className="flex items-center gap-2 text-sm text-gray-400">
+                <Calendar className="size-4" />
+                <span>{new Date(booking.createdAt).toLocaleDateString()}</span>
+              </div>
+
+              {/* View Details Button */}
+              <button
+                onClick={() =>
+                  router.push(`/admin/bookings/dev-bookings/${booking?._id}`)
+                }
+                className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+              >
+                View Details
+              </button>
+            </div>
           </div>
-        )}
+        ))}
       </div>
-    </div>
+
+      {bookings.length === 0 && (
+        <div className="text-center text-gray-400 mt-12">
+          <AlertCircle className="size-12 mx-auto mb-4" />
+          <p>No bookings found</p>
+        </div>
+      )}
+    </>
   );
 }
