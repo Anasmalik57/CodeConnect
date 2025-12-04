@@ -1,17 +1,7 @@
 "use client";
 import { useState } from "react";
-import {
-  User,
-  Mail,
-  Phone,
-  Briefcase,
-  MessageSquare,
-  Upload,
-  IndianRupee,
-  Send,
-  ChevronDown,
-} from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
+import { User, Mail, Send, Phone, Upload, Briefcase, IndianRupee, ChevronDown, MessageSquare, } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const services = [
   "Hire a Developer",
@@ -70,10 +60,6 @@ export default function BookServicePage() {
     setIsSubmitting(true);
     await new Promise((r) => setTimeout(r, 1600));
 
-    // toast.success("Request received! We’ll contact you within 2 hours.", {
-    //   style: { background: "#0f172a", color: "#e0f2fe", border: "1px solid #0ea5e9" },
-    //   icon: "Success"
-    // });
     alert("Request received! We’ll contact you within 2 hours.");
 
     setForm({
