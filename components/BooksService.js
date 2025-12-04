@@ -1,7 +1,17 @@
 "use client";
 import { useState } from "react";
-import { User, Mail, Send, Phone, Upload, Briefcase, IndianRupee, ChevronDown, MessageSquare, } from "lucide-react";
+import {
+  User,
+  Mail,
+  Send,
+  Phone,
+  Briefcase,
+  IndianRupee,
+  ChevronDown,
+  MessageSquare,
+} from "lucide-react";
 import { Toaster } from "react-hot-toast";
+import { API_BASE } from "@/lib/api";
 
 const services = [
   "Hire a Developer",
@@ -24,7 +34,6 @@ export default function BookServicePage() {
     description: "",
     budget: "",
   });
-  const [fileName, setFileName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -34,13 +43,7 @@ export default function BookServicePage() {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleFile = (e) => {
-    const file = e.target.files?.[0];
-    if (file)
-      setFileName(
-        file.name.length > 35 ? file.name.slice(0, 32) + "..." : file.name
-      );
-  };
+
 
   const validate = () => {
     const err = {};
@@ -58,21 +61,38 @@ export default function BookServicePage() {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1600));
 
-    alert("Request received! We’ll contact you within 2 hours.");
+    try {
+      const response = await fetch(`${API_BASE}/book-service`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-    setForm({
-      name: "",
-      phone: "",
-      email: "",
-      service: "",
-      description: "",
-      budget: "",
-    });
-    setFileName("");
-    setErrors({});
-    setIsSubmitting(false);
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Request received! We'll contact you within 2 hours.");
+        setForm({
+          name: "",
+          phone: "",
+          email: "",
+          service: "",
+          description: "",
+          budget: "",
+        });
+        setErrors({});
+      } else {
+        alert("Failed to send request. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -155,34 +175,53 @@ export default function BookServicePage() {
                   )}
                 </div>
               </div>
-
-              {/* Service */}
-              <div>
-                <label className="block text-sm font-medium text-cyan-300 mb-2">
-                  Service Required
-                </label>
-                <div className="relative">
-                  <Briefcase className="absolute left-4 top-4 w-5 h-5 text-cyan-400" />
-                  <select
-                    name="service"
-                    value={form.service}
-                    onChange={handleChange}
-                    className="w-full pl-12 pr-10 py-4 bg-white/5 border border-blue-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-400 transition appearance-none cursor-pointer"
-                  >
-                    <option value="">Select a service</option>
-                    {services.map((s) => (
-                      <option key={s} value={s} className="bg-gray-900">
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-4 top-4 w-5 h-5 text-cyan-400 pointer-events-none" />
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Service */}
+                <div>
+                  <label className="block text-sm font-medium text-cyan-300 mb-2">
+                    Service Required
+                  </label>
+                  <div className="relative">
+                    <Briefcase className="absolute left-4 top-4 w-5 h-5 text-cyan-400" />
+                    <select
+                      name="service"
+                      value={form.service}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-10 py-4 bg-white/5 border border-blue-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-400 transition appearance-none cursor-pointer"
+                    >
+                      <option value="">Select a service</option>
+                      {services.map((s) => (
+                        <option key={s} value={s} className="bg-gray-900">
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-4 w-5 h-5 text-cyan-400 pointer-events-none" />
+                  </div>
+                  {errors.service && (
+                    <p className="text-red-400 text-xs mt-1">
+                      {errors.service}
+                    </p>
+                  )}
                 </div>
-                {errors.service && (
-                  <p className="text-red-400 text-xs mt-1">{errors.service}</p>
-                )}
+                {/* Budget */}
+                <div>
+                  <label className="block text-sm font-medium text-cyan-300 mb-2">
+                    Budget Range
+                  </label>
+                  <div className="relative">
+                    <IndianRupee className="absolute left-4 top-4 w-5 h-5 text-cyan-400" />
+                    <input
+                      name="budget"
+                      value={form.budget}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-4 py-4 bg-white/5 border border-blue-500/30 rounded-xl text-white placeholder-cyan-400/50 focus:outline-none focus:border-cyan-400 transition"
+                      placeholder="e.g. ₹1,00,000 – ₹3,00,000"
+                    />
+                  </div>
+                </div>
               </div>
-
               {/* Description */}
               <div>
                 <label className="block text-sm font-medium text-cyan-300 mb-2">
@@ -204,44 +243,6 @@ export default function BookServicePage() {
                     {errors.description}
                   </p>
                 )}
-              </div>
-
-              {/* Budget + File */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-cyan-300 mb-2">
-                    Budget Range (Optional)
-                  </label>
-                  <div className="relative">
-                    <IndianRupee className="absolute left-4 top-4 w-5 h-5 text-cyan-400" />
-                    <input
-                      name="budget"
-                      value={form.budget}
-                      onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-4 bg-white/5 border border-blue-500/30 rounded-xl text-white placeholder-cyan-400/50 focus:outline-none focus:border-cyan-400 transition"
-                      placeholder="e.g. ₹1,00,000 – ₹3,00,000"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-cyan-300 mb-2">
-                    Attachments (Optional)
-                  </label>
-                  <label className="block">
-                    <input
-                      type="file"
-                      onChange={handleFile}
-                      className="hidden"
-                    />
-                    <div className="flex items-center gap-3 px-5 py-4 bg-white/5 border border-blue-500/30 rounded-xl cursor-pointer hover:border-cyan-400 transition">
-                      <Upload className="w-5 h-5 text-cyan-400" />
-                      <span className="text-cyan-200 text-sm">
-                        {fileName || "Choose file or drag here"}
-                      </span>
-                    </div>
-                  </label>
-                </div>
               </div>
 
               {/* Clean Submit Button */}
