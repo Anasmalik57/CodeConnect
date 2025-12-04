@@ -56,43 +56,26 @@ export default function BookServicePage() {
     return Object.keys(err).length === 0;
   };
 
-  const onSubmit = async (e) => {
+ const onSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    await new Promise((r) => setTimeout(r, 1600));
 
-    try {
-      const response = await fetch(`${API_BASE}/book-service`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+    alert("Request received! We’ll contact you within 2 hours.");
 
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Request received! We'll contact you within 2 hours.");
-        setForm({
-          name: "",
-          phone: "",
-          email: "",
-          service: "",
-          description: "",
-          budget: "",
-        });
-        setErrors({});
-      } else {
-        alert("Failed to send request. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    setForm({
+      name: "",
+      phone: "",
+      email: "",
+      service: "",
+      description: "",
+      budget: "",
+    });
+    setFileName("");
+    setErrors({});
+    setIsSubmitting(false);
   };
 
   return (
