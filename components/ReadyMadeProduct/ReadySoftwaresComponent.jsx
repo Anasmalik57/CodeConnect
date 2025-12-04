@@ -73,7 +73,7 @@ export default function ReadyMadeSoftwarePage() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-6 py-2.5 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 ${
+                className={`px-5 py-2 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 ${
                   selectedCategory === cat
                     ? "bg-linear-to-r from-blue-600 to-sky-500 text-white shadow-lg shadow-blue-500/50"
                     : "bg-white/5 text-blue-300 hover:bg-white/10 border border-blue-500/30"
