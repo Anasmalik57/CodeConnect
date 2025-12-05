@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Home, Code2, Mail, Menu, X, Sparkles, FolderCode, BookAudio } from "lucide-react";
+import { Home, Code2, Mail, Menu, X, Sparkles, FolderCode, BookAudio, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -10,6 +10,7 @@ const navLinks = [
   { name: "Softwares", href: "/softwares-readymade", icon: FolderCode  },
   { name: "Our Services", href: "/book-services", icon: FolderCode  },
   { name: "About", href: "/about", icon: BookAudio   },
+  { name: "Career", href: "/careers", icon: GraduationCap   },
   { name: "Contact", href: "/contact", icon: Mail },
 ];
 
@@ -29,7 +30,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`z-50 border-b border-blue-300/70 transition-all duration-500 ${scrolled ? "bg-black/80 backdrop-blur-2xl border-b border-blue-500/30 shadow-xl shadow-blue-900/50": "bg-transparent"} ${pathname.startsWith('/admin') ? 'hidden' : ''}`}>
-        <div className="max-w-[1400px] mx-auto px-5 lg:px-8">
+        <div className="max-w-[1450px] mx-auto px-5 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
@@ -76,7 +77,7 @@ export default function Navbar() {
 
             {/* CTA Button Here... */}
             <div className="hidden md:block">
-              <button onClick={()=> router.push("/auth/login")} className="group relative px-8 py-3.5 cursor-pointer bg-linear-to-r from-blue-600 via-sky-500 to-teal-400  rounded-2xl font-bold text-white overflow-hidden shadow-2xl shadow-sky-500/40 hover:shadow-sky-500/70 transition-all duration-400 hover:scale-105 active:scale-95">
+              <button onClick={()=> router.push("/auth/login")} className="group relative px-6 py-3 cursor-pointer bg-linear-to-r from-blue-600 via-sky-500 to-teal-400  rounded-2xl font-bold text-white overflow-hidden shadow-2xl shadow-sky-500/40 hover:shadow-sky-500/70 transition-all duration-400 hover:scale-105 active:scale-95">
                 <span className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 <span className="relative flex items-center gap-2">
                   <Sparkles className="w-5 h-5 group-hover:animate-pulse" />
