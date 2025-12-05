@@ -108,6 +108,7 @@ export default function Dashboard() {
           </div>
 
           {/* Admin Welcome / Total Users Card */}
+          {currentUser?.role === "admin" && 
           <div className="bg-linear-to-br from-purple-600/20 to-blue-600/20 border border-purple-500/30 rounded-2xl p-8 backdrop-blur-xl hover:border-purple-500/50 transition-all">
             <div className="flex items-center justify-between">
               <div className="flex-1">
@@ -137,7 +138,7 @@ export default function Dashboard() {
                 )}
               </div>
             </div>
-          </div>
+          </div>}
         </div>
 
         {/* Footer Note */}
