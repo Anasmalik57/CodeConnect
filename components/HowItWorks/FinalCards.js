@@ -1,12 +1,5 @@
 "use client";
-import {
-  DollarSign,
-  CreditCard,
-  Target,
-  TrendingUp,
-  Wrench,
-  RotateCw,
-} from "lucide-react";
+import { DollarSign, CreditCard, Target, TrendingUp, Wrench, RotateCw, } from "lucide-react";
 
 export default function FinalCards() {
   const features = [
@@ -54,26 +47,22 @@ export default function FinalCards() {
             return (
               <div key={idx} className="relative group">
                 {/* Hover Glow */}
-                <div
-                  className={`absolute -inset-1 bg-linear-to-r ${feature.iconBg} rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500`}
-                />
+                <div className={`absolute -inset-1 bg-linear-to-r ${feature.iconBg} rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500`} />
 
                 {/* Card */}
                 <div className="relative h-full bg-linear-to-b from-white/10 to-white/5 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-6 hover:border-blue-500/50 transition-all duration-300">
                   {/* Icon & Title */}
-                  <div className="flex items-start gap-3 mb-4">
-                    <div
-                      className={`p-2.5 bg-linear-to-r ${feature.iconBg} rounded-xl shrink-0`}
-                    >
-                      <Icon className="w-5 h-5 text-white" strokeWidth={2.5} />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`p-2 bg-linear-to-r ${feature.iconBg} rounded-xl shrink-0`}>
+                      <Icon className="size-4 text-white" strokeWidth={2.5} />
                     </div>
-                    <h3 className="text-lg font-bold text-white leading-tight">
+                    <h3 className="text-lg sm:text-2xl font-bold text-white leading-tight">
                       {feature.title}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                  <p className="text-gray-400 text-xs sm:text-sm mb-4 leading-relaxed">
                     {feature.description}
                   </p>
 
