@@ -183,7 +183,7 @@ export default function DeveloperDetailClient() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-20 pb-16 px-4 md:px-6">
+    <div className="min-h-[90vh] bg-black text-white pt-10 pb-16 px-4 md:px-6">
       <div className="max-w-[1380px] mx-auto">
         {/* Back Button */}
         <button
@@ -360,7 +360,9 @@ export default function DeveloperDetailClient() {
               <div className="relative">
                 <div className="flex items-center gap-4 mb-6">
                   <TrendingUp className="size-5 text-blue-400" />
-                  <h2 className="text-[16px] md:text-2xl font-bold text-white">Book Now</h2>
+                  <h2 className="text-[16px] md:text-2xl font-bold text-white">
+                    Book Now
+                  </h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
