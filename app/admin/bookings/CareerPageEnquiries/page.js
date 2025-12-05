@@ -37,14 +37,7 @@ export default function AdminCareerEnquiries() {
   return (
     <div className="min-h-screen bg-black/95 p-6 lg:p-10">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-10">
-          <h1 className="text-4xl font-bold bg-linear-to-r from-emerald-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-            Career Applications
-          </h1>
-          <div className="p-4 bg-linear-to-br from-emerald-600/20 to-cyan-600/20 border border-emerald-500/30 rounded-2xl backdrop-blur-xl">
-            <Briefcase className="w-8 h-8 text-emerald-400" />
-          </div>
-        </div>
+
 
         {applications.length === 0 ? (
           <p className="text-center text-white/60 text-lg">No applications yet</p>
