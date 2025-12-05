@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, MousePointer2 } from "lucide-react";
+import { MousePointer2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const services = [
@@ -57,6 +57,11 @@ const services = [
     id: 10,
      title: "Contact Page Enquiries",
     route: "/admin/bookings/ContactPageEnqs",
+  },
+  {
+    id: 11,
+     title: "Career Enquiries",
+    route: "/admin/bookings/CareerPageEnquiries",
   },
 ];
 
