@@ -103,12 +103,12 @@ export default function BookServicePage() {
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-4">
+            <h1 className="text-4xl md:text-7xl font-extrabold mb-4">
               <span className="bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Book a Service
               </span>
             </h1>
-            <p className="text-lg text-cyan-200/70 font-medium">
+            <p className="text-sm md:text-lg text-cyan-200/70 font-medium">
               Fill the form below and our team will reach out within 2 hours.
             </p>
           </div>
