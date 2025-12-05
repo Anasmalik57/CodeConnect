@@ -161,13 +161,13 @@ const handleInstallSubmit = async (e) => {
           <div className="absolute top-1/2 left-1/6 w-96 h-96 bg-violet-900/30 rounded-full blur-3xl animate-pulse"></div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-6 py-16 lg:py-28">
           {/* Header & Content - same as before */}
-          <header className="text-center mb-20">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-4 bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <header className="text-center mb-10 md:mb-20">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-3 md:mb-4 bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Code & Script Installation
             </h1>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="text-sm md:text-lg text-slate-300 max-w-2xl mx-auto">
               Professional installation & configuration for web and mobile
               applications
             </p>
@@ -260,20 +260,15 @@ const handleInstallSubmit = async (e) => {
               Submit your details to receive an email with next steps for
               payment or scheduling a callback.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setIsBookModalOpen(true)}
-                className="group px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-600 rounded-xl font-semibold shadow-lg shadow-blue-900/50 hover:shadow-blue-900/70 transition-all hover:scale-105 active:scale-95"
-              >
+            {/* buttons */}
+            <div className="flex flex-row sm:flex-row gap-2 md:gap-4 justify-center *:w-fit *:text-nowrap *:text-xs *:md:text-sm">
+              <button onClick={() => setIsBookModalOpen(true)} className="group px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-600 rounded-xl font-semibold shadow-lg shadow-blue-900/50 hover:shadow-blue-900/70 transition-all hover:scale-105 active:scale-95">
                 <span className="flex items-center gap-2">
-                  Book Services Now{" "}
+                  Book <span className="hidden md:block"> Services</span> Now{" "}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
-              <button
-                onClick={() => setIsInstallModalOpen(true)}
-                className="px-8 py-4 border border-slate-600 bg-slate-900/50 rounded-xl font-semibold hover:bg-slate-800/50 transition-all backdrop-blur-sm flex items-center gap-2"
-              >
+              <button onClick={() => setIsInstallModalOpen(true)} className="px-4 md:px-8 py-4 border border-slate-600 bg-slate-900/50 rounded-xl font-semibold hover:bg-slate-800/50 transition-all backdrop-blur-sm flex items-center gap-2" >
                 <DownloadCloud className="w-5 h-5" /> Install Own Code
               </button>
             </div>

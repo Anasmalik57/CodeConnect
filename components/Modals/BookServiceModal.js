@@ -20,9 +20,9 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-5 *:text-xs *:md:text-sm">
               <div>
-                <label className="block text-sm text-slate-300 mb-1">
+                <label className="block text-slate-300 mb-1">
                   Full Name
                 </label>
                 <input
@@ -36,7 +36,7 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
                 />
               </div>
               <div>
-                <label className="block text-sm text-slate-300 mb-1">
+                <label className="block text-slate-300 mb-1">
                   Email
                 </label>
                 <input
@@ -51,9 +51,9 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-5 *:text-xs *:md:text-sm">
               <div>
-                <label className="block text-sm text-slate-300 mb-1">
+                <label className="block text-slate-300 mb-1">
                   Phone
                 </label>
                 <input
@@ -69,7 +69,7 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
 
               {/* Preferred Callback Time Dropdown */}
               <div>
-                <label className="block text-sm text-slate-300 mb-1">
+                <label className="block text-slate-300 mb-1">
                   Preferred Callback Time
                 </label>
                 <div className="relative">
@@ -94,10 +94,10 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
 
             {/* Multi-select Languages */}
             <div>
-              <label className="block text-sm text-slate-300 mb-2">
+              <label className="block text-slate-300 mb-2 text-sm">
                 Preferred Language(s)
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                 {languages.map((lang) => (
                   <label
                     key={lang}
@@ -109,17 +109,17 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
                       onChange={() => toggleLanguage(lang)}
                       className="w-4 h-4 text-blue-500 bg-slate-800 border-slate-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-sm text-slate-300">{lang}</span>
+                    <span className="text-xs md:text-sm text-slate-300">{lang}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm text-slate-300 mb-1">Brief</label>
+              <label className="block text-slate-300 mb-1 text-sm ">Brief</label>
               <textarea
                 name="brief"
-                rows={4}
+                rows={3}
                 value={formData.brief}
                 onChange={handleInputChange}
                 placeholder="Tell us about your need..."
@@ -127,24 +127,24 @@ const BookServiceModal = ({handleInputChange, handleSubmit, timeSlots, languages
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-4">
+            <div className="flex justify-end gap-3 pt-4 mr-2 md:mr-0">
               <button
                 type="button"
                 onClick={() => setIsBookModalOpen(false)}
-                className="px-6 py-3 border border-slate-600 rounded-lg font-medium hover:bg-slate-800 transition"
+                className="px-6 py-1.5 md:py-3 border border-slate-600 rounded-lg font-medium hover:bg-slate-800 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-8 py-3 bg-linear-to-r from-purple-600 to-blue-600 rounded-lg font-semibold shadow-lg hover:shadow-purple-900/50 transition-all hover:scale-105"
+                className="px-8 py-1.5 text-nowrap text-xs md:text-lg md:py-3 bg-linear-to-r from-purple-600 to-blue-600 rounded-lg font-semibold shadow-lg hover:shadow-purple-900/50 transition-all hover:scale-105"
               >
                 Submit & Continue →
               </button>
             </div>
           </form>
 
-          <p className="text-xs text-slate-500 mt-6 text-center">
+          <p className="text-[10px] md:text-xs text-slate-500 mt-6 text-center">
             After submission you can proceed to payment or schedule a callback.
           </p>
         </div>
