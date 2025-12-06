@@ -14,7 +14,7 @@ const ProductCard = ({ filteredProducts }) => {
       navigator.share({
         title: product.name,
         text: product.description,
-        url: window.location.href+"/"+product?._id,
+        url: window.location.href + "/" + product?._id,
       });
     } else {
       alert(`Share ${product.name}`);
@@ -44,7 +44,10 @@ const ProductCard = ({ filteredProducts }) => {
               />
               <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/40 to-transparent" />
               <button
-                onClick={() => shareProduct(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  shareProduct(product);
+                }}
                 className="absolute top-4 cursor-pointer right-4 p-2.5 bg-slate-800/80 backdrop-blur-md rounded-xl hover:bg-slate-700/80 transition-all duration-300 hover:scale-110 hover:rotate-12 border border-slate-600/50"
               >
                 <Share2 className="w-4 h-4 text-slate-200" />
@@ -61,7 +64,10 @@ const ProductCard = ({ filteredProducts }) => {
                 </span>
               </div>
 
-              <p className="text-slate-300 text-left truncate text-xs leading-relaxed line-clamp-1" dangerouslySetInnerHTML={{ __html: product.description || "" }}/>
+              <p
+                className="text-slate-300 text-left truncate text-xs leading-relaxed line-clamp-1"
+                dangerouslySetInnerHTML={{ __html: product.description || "" }}
+              />
 
               <div className="flex items-center gap-2">
                 {product.platforms?.map((platform) => (

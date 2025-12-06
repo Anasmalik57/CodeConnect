@@ -6,11 +6,12 @@ import { useState, useEffect, useRef } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import { X, Upload, Check, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { countrielsList } from "../AdminPanel/Data";
 
 export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
   const [formData, setFormData] = useState({
     name: "",
-    photo: "",
+    photo: "/dev.webp",
     skills: "",
     experience: "",
     hourlyRate: "",
@@ -40,53 +41,63 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
 
   const handleUploadSuccess = (result) => {
     const url = result?.info?.secure_url;
-    console.log("Uploaded Photo URL:", url); // Debug ke liye
     if (url) {
       setFormData((prev) => ({ ...prev, photo: url }));
     }
     setIsUploading(false);
   };
 
- const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  // Convert skills (comma separated → array)
-  const skillsArray = formData.skills
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+    // Convert skills (comma separated → array)
+    const skillsArray = formData.skills
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
-  // Convert preferred languages (comma separated → array)
-  const preferredLangArray = formData.preferredLanguage
-    .split(",")
-    .map((l) => l.trim())
-    .filter(Boolean);
+    // Convert preferred languages (comma separated → array)
+    const preferredLangArray = formData.preferredLanguage
+      .split(",")
+      .map((l) => l.trim())
+      .filter(Boolean);
 
-  // Create final developer object
-  const newDeveloper = {
-    ...formData,
-    skills: skillsArray,
-    preferredLanguage: preferredLangArray,
-    experience: Number(formData.experience) || 0,
-    hourlyRate: Number(formData.hourlyRate) || 0,
+    // Create final developer object
+    const newDeveloper = {
+      ...formData,
+      skills: skillsArray,
+      preferredLanguage: preferredLangArray,
+      experience: Number(formData.experience) || 0,
+      hourlyRate: Number(formData.hourlyRate) || 0,
+    };
+
+    // Send to parent
+    onAdd?.(newDeveloper);
+
+    // Reset form & close modal
+    setFormData({
+      name: "",
+      photo: "/dev.webp",
+      skills: "",
+      experience: "",
+      hourlyRate: "",
+      availability: "Full-time",
+      level: "Intermediate",
+      country: "India",
+      state: "",
+      preferredLanguage: "English",
+    });
+    onClose();
   };
-
-  console.log("New Developer Added:", newDeveloper);
-
-  // Send to parent
-  onAdd?.(newDeveloper);
-
-  // Close modal
-  onClose();
-};
-
 
   const removePhoto = (e) => {
     e.stopPropagation();
-    setFormData((prev) => ({ ...prev, photo: "" }));
+    setFormData((prev) => ({ ...prev, photo: "/dev.webp" }));
   };
 
   if (!isOpen) return null;
+
+  const isDefaultPhoto = formData.photo === "/dev.webp";
 
   return (
     <>
@@ -95,15 +106,15 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
           ref={modalRef}
-          className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-linear-to-b from-gray-900/95 to-black/95 backdrop-blur-3xl border border-white/20 rounded-3xl shadow-2xl shadow-purple-600/30 p-8"
+          className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-gradient-to-b from-gray-900/95 to-black/95 backdrop-blur-3xl border border-white/20 rounded-3xl shadow-2xl shadow-purple-600/30 p-8"
         >
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-black bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Add New Developer
             </h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white/10 rounded-xl"
+              className="p-2 hover:bg-white/10 rounded-xl transition-colors"
             >
               <X className="w-6 h-6 text-gray-400 hover:text-white" />
             </button>
@@ -118,7 +129,6 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
 
               <CldUploadWidget
                 uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-                // YE BADLAV ZAROORI HAI v6+ ME!
                 onSuccess={handleUploadSuccess}
                 onQueuesStart={() => setIsUploading(true)}
                 onQueuesEnd={() => setIsUploading(false)}
@@ -133,37 +143,40 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
                         <Loader2 className="w-14 h-14 mx-auto animate-spin text-blue-400" />
                         <p className="text-white text-lg">Uploading...</p>
                       </div>
-                    ) : formData.photo ? (
+                    ) : (
                       <div className="space-y-4">
                         <div className="w-40 h-40 mx-auto rounded-2xl overflow-hidden border-4 border-blue-500/50 shadow-2xl">
                           <Image
                             src={formData.photo}
-                            width={1920}
-                            height={1080}
-                            alt="Preview"
+                            width={160}
+                            height={160}
+                            alt="Developer Preview"
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <p className="text-green-400 font-bold text-lg">
-                          Uploaded Successfully!
-                        </p>
-                        <button
-                          type="button"
-                          onClick={removePhoto}
-                          className="text-red-400 hover:text-red-300 text-sm font-medium"
-                        >
-                          Remove Photo
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        <Upload className="w-16 h-16 mx-auto text-gray-400" />
-                        <p className="text-white text-xl font-medium">
-                          Click to Upload Photo
-                        </p>
-                        <p className="text-gray-500">
-                          JPG, PNG, WebP • Max 10MB
-                        </p>
+                        {isDefaultPhoto ? (
+                          <>
+                            <p className="text-gray-400 text-lg">
+                              Default Photo Selected
+                            </p>
+                            <p className="text-gray-500 text-sm">
+                              Click to upload custom photo
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-green-400 font-bold text-lg">
+                              Uploaded Successfully!
+                            </p>
+                            <button
+                              type="button"
+                              onClick={removePhoto}
+                              className="text-red-400 hover:text-red-300 text-sm font-medium transition-colors"
+                            >
+                              Use Default Photo
+                            </button>
+                          </>
+                        )}
                       </div>
                     )}
                   </div>
@@ -171,7 +184,7 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
               </CldUploadWidget>
             </div>
 
-            {/* Baaki form fields */}
+            {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <input
                 type="text"
@@ -181,8 +194,9 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, name: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition-colors"
               />
+
               <input
                 type="text"
                 placeholder="Skills (comma separated) *"
@@ -191,28 +205,33 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, skills: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition-colors"
               />
+
               <input
                 type="number"
                 placeholder="Experience (years) *"
                 required
+                min="0"
                 value={formData.experience}
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, experience: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition-colors"
               />
+
               <input
                 type="number"
                 placeholder="Hourly Rate (₹) *"
                 required
+                min="0"
                 value={formData.hourlyRate}
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, hourlyRate: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition-colors"
               />
+
               <input
                 type="text"
                 placeholder="State *"
@@ -221,30 +240,33 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, state: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition-colors"
               />
-              {/* Baki selects daal dena */}
-              {/* Baaki selects - YE ADD KARO */}
-              {/* Availability */}
+
               <select
                 value={formData.availability}
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, availability: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none transition-colors"
               >
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Contract">Contract</option>
+                <option value="Full-time" className="bg-black">
+                  Full-time
+                </option>
+                <option value="Part-time" className="bg-black">
+                  Part-time
+                </option>
+                <option value="Contract" className="bg-black">
+                  Contract
+                </option>
               </select>
 
-              {/* Level */}
               <select
                 value={formData.level}
                 onChange={(e) =>
                   setFormData((p) => ({ ...p, level: e.target.value }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none transition-colors"
               >
                 <option value="Beginner" className="bg-black">
                   Beginner
@@ -257,20 +279,6 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
                 </option>
               </select>
 
-              <input
-                type="text"
-                placeholder="Preferred Languages (comma separated) *"
-                required
-                value={formData.preferredLanguage}
-                onChange={(e) =>
-                  setFormData((p) => ({
-                    ...p,
-                    preferredLanguage: e.target.value,
-                  }))
-                }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none"
-              />
-
               <select
                 value={formData.country}
                 onChange={(e) =>
@@ -279,31 +287,41 @@ export default function AddDeveloperModal({ isOpen, onClose, onAdd }) {
                     country: e.target.value,
                   }))
                 }
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white outline-none transition-colors"
               >
-                <option value="India" className="bg-black">
-                  India
-                </option>
-                <option value="USA" className="bg-black">
-                  USA
-                </option>
-                <option value="UK" className="bg-black">
-                  UK
-                </option>
+                {countrielsList.map((country) => (
+                  <option key={country} value={country} className="bg-black">
+                    {country}
+                  </option>
+                ))}
               </select>
+
+              <input
+                type="text"
+                placeholder="Languages (e.g., English, Hindi) *"
+                required
+                value={formData.preferredLanguage}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    preferredLanguage: e.target.value,
+                  }))
+                }
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition-colors"
+              />
             </div>
 
             <div className="flex justify-end gap-4 pt-6">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-8 py-3 border border-white/20 rounded-xl text-gray-300 hover:bg-white/10"
+                className="px-8 py-3 border border-white/20 rounded-xl text-gray-300 hover:bg-white/10 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-10 py-3 bg-linear-to-r from-blue-600 to-purple-600 rounded-xl font-bold text-white flex items-center gap-3 shadow-xl hover:shadow-purple-500/50"
+                className="px-10 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-bold text-white flex items-center gap-3 shadow-xl hover:shadow-purple-500/50 transition-all"
               >
                 <Check className="w-5 h-5" />
                 Add Developer
