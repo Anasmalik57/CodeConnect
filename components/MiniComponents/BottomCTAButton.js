@@ -6,7 +6,7 @@ const BottomCTAButton = () => {
   return (
     <>
       {/* Bottom CTA Section */}
-      <div className="mt-20 relative">
+      <div className="mt-20 relative hidden">
         <div className="absolute hidden inset-0 bg-linear-to-r from-blue-500 via-sky-500 to-teal-500 rounded-3xl blur-2xl opacity-20" />
         <div className="relative bg-linear-to-r from-white/10 to-white/5 backdrop-blur-xl border border-blue-500/30 rounded-3xl p-12 text-center">
           <h2 className="text-xl md:text-4xl font-bold text-white mb-4">
@@ -19,7 +19,7 @@ const BottomCTAButton = () => {
           </p>
           <Link href={"https://api.whatsapp.com/send?phone=+918121923831&text=Hello%NoDeskDev%Team,%20I%20need%20your%20service"} className="hidden md:block group relative px-10 py-5 transition-all duration-400 hover:scale-105 active:scale-95 border w-fit  border-white/25 rounded-full" target="_blank">
             <span className="relative flex items-center gap-2 cursor-pointer">
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-5  h-5" />
               <span className="hidden sm:block">Get Custom Quote </span>
               <span className="md:hidden">Get a Quote </span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -35,6 +35,7 @@ const BottomCTAButton = () => {
           </Link>
         </div>
       </div>
+      
     </>
   );
 };
