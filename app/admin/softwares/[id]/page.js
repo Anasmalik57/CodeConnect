@@ -272,27 +272,13 @@ export default function SoftwareDetailPage() {
               onChange={handleChange}
               className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500/60 outline-none transition"
             >
-              <option value="Food" className="bg-black">
-                Food
-              </option>
-              <option value="E-commerce" className="bg-black">
-                E-commerce
-              </option>
-              <option value="Health" className="bg-black">
-                Health
-              </option>
-              <option value="Education" className="bg-black">
-                Education
-              </option>
-              <option value="Finance" className="bg-black">
-                Finance
-              </option>
-              <option value="Social" className="bg-black">
-                Social
-              </option>
-              <option value="Other" className="bg-black">
-                Other
-              </option>
+              <option value="Food" className="bg-black">Food</option>
+              <option value="E-commerce" className="bg-black">E-commerce</option>
+              <option value="Health" className="bg-black">Health</option>
+              <option value="Education" className="bg-black">Education</option>
+              <option value="Finance" className="bg-black">Finance</option>
+              <option value="Social" className="bg-black">Social</option>
+              <option value="Other" className="bg-black">Other</option>
             </select>
           </div>
 
@@ -463,7 +449,7 @@ export default function SoftwareDetailPage() {
 
             <button
               type="submit"
-              className="px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3 shadow-xl hover:shadow-purple-500/50 transition-all hover:scale-105"
+              className="px-10 py-4 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3 shadow-xl hover:shadow-purple-500/50 transition-all hover:scale-105"
             >
               <Save className="w-5 h-5" />
               Update Project
