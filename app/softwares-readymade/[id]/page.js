@@ -149,75 +149,74 @@ export default function ProductDetailPage() {
     alert("Quote copied to clipboard!");
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // Validation
-  if (!formData.name || !formData.contact) {
-    alert("Name and Contact are required!");
-    return;
-  }
-
-  const enquiryData = {
-    // Client Info
-    name: formData.name.trim(),
-    contact: formData.contact.trim(),
-    message: formData.message.trim() || "",
-
-    // Product Info
-    productId: product._id,
-    productName: product.name,
-    demoLink: product.demoLink || "",
-    platforms: product.platforms || [],
-    technologies: Array.isArray(product.tech) 
-      ? product.tech 
-      : product.tech?.split(",").map(t => t.trim()) || [],
-
-    // Pricing
-    basePrice: basePrice,
-    selectedAddons: selectedAddons.map(addon => ({
-      label: addon.label,
-      cost: addon.cost,
-    })),
-    addonsTotal: Math.round(addonsTotal),
-    serviceFee: Math.round(serviceFee),
-    finalTotal: Math.round(total),
-  };
-
-  try {
-    const res = await fetch(`${API_BASE}/buy-product-enquire`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(enquiryData),
-    });
-
-    const result = await res.json();
-
-    if (res.ok && result.success) {
-      alert("Request sent successfully! We will contact you soon.");
-      
-      // Optional: Reset form
-      setFormData({ name: "", contact: "", message: "" });
-      setAddons({
-        deployment: false,
-        branding: false,
-        payment: false,
-        gateway: false,
-        customFields: false,
-        multiLanguage: false,
-        whatsapp: false,
-      });
-    } else {
-      alert(result.message || "Something went wrong. Please try again.");
+    // Validation
+    if (!formData.name || !formData.contact) {
+      alert("Name and Contact are required!");
+      return;
     }
-  } catch (err) {
-    console.error("Submit Error:", err);
-    alert("Network error. Please check your connection.");
-  }
-};
 
+    const enquiryData = {
+      // Client Info
+      name: formData.name.trim(),
+      contact: formData.contact.trim(),
+      message: formData.message.trim() || "",
+
+      // Product Info
+      productId: product._id,
+      productName: product.name,
+      demoLink: product.demoLink || "",
+      platforms: product.platforms || [],
+      technologies: Array.isArray(product.tech)
+        ? product.tech
+        : product.tech?.split(",").map((t) => t.trim()) || [],
+
+      // Pricing
+      basePrice: basePrice,
+      selectedAddons: selectedAddons.map((addon) => ({
+        label: addon.label,
+        cost: addon.cost,
+      })),
+      addonsTotal: Math.round(addonsTotal),
+      serviceFee: Math.round(serviceFee),
+      finalTotal: Math.round(total),
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/buy-product-enquire`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(enquiryData),
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        alert("Request sent successfully! We will contact you soon.");
+
+        // Optional: Reset form
+        setFormData({ name: "", contact: "", message: "" });
+        setAddons({
+          deployment: false,
+          branding: false,
+          payment: false,
+          gateway: false,
+          customFields: false,
+          multiLanguage: false,
+          whatsapp: false,
+        });
+      } else {
+        alert(result.message || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      console.error("Submit Error:", err);
+      alert("Network error. Please check your connection.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white py-6 px-4 sm:px-6 lg:px-8">
@@ -225,16 +224,13 @@ const handleSubmit = async (e) => {
         <div className="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
           {/* Header */}
           <div className="relative bg-linear-to-r from-blue-900/30 to-purple-900/30 p-6 border-b border-slate-800">
-            <h1 className="text-2xl font-extrabold bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-extrabold bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               {product.name}
             </h1>
-            <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
-              {product.description}
-            </p>
 
             <Link
               href="/softwares-readymade"
-              className="absolute top-[40%] hidden  right-10 text-xs border border-white/20 px-3 py-2.5 md:inline-flex items-center gap-2 text-white hover:text-white transition-all duration-200 ease-in bg-linear-to-tl from-slate-900 via-slate-700 to-slate-600 rounded-full shadow-lg shadow-slate-900/50 hover:shadow-xl hover:shadow-slate-900/60"
+              className="absolute top-[28%] hidden  right-10 text-xs border border-white/20 px-3 py-2.5 md:inline-flex items-center gap-2 text-white hover:text-white transition-all duration-200 ease-in bg-linear-to-tl from-slate-900 via-slate-700 to-slate-600 rounded-full shadow-lg shadow-slate-900/50 hover:shadow-xl hover:shadow-slate-900/60"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Apps
@@ -243,7 +239,7 @@ const handleSubmit = async (e) => {
 
           <div className="grid lg:grid-cols-2 gap-8 p-6">
             {/* Left Side */}
-            <div className="space-y-4">
+            <div className="space-y-4 border-b pb-8 sm:pb-0 md:border-b-0 border-white/20">
               {/* Main Image */}
               <div className="relative group">
                 <Image
@@ -257,7 +253,7 @@ const handleSubmit = async (e) => {
 
               {/* Thumbnail Grid */}
               {product.screenshots.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {product.screenshots.slice(0, 4).map((img, i) => (
                     <button
                       key={i}
@@ -285,7 +281,7 @@ const handleSubmit = async (e) => {
                 {product.platforms?.map((p) => (
                   <span
                     key={p}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 rounded-lg border border-slate-700 text-xs font-medium"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 rounded-lg border border-slate-700 text-[10px] sm:text-xs font-medium"
                   >
                     {p === "Web" ? (
                       <Monitor className="w-3.5 h-3.5" />
@@ -330,6 +326,11 @@ const handleSubmit = async (e) => {
                 >
                   <Copy className="w-4 h-4" /> Copy Quote
                 </button>
+              </div>
+              {/* ============================== */}
+              <div className="border mt-6 p-4 text-sm border-white/20 rounded-xl">
+                <div className=" prose prose-invert prose-sm max-w-none  text-slate-300 leading-relaxed  [&_ul]:list-disc [&_ul]:pl-5  [&_ol]:list-decimal [&_ol]:pl-5  [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-6 [&_h1]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-5 [&_h2]:mb-2 [&_strong]:text-white [&_em]:italic [&_a]:text-blue-400 [&_a]:underline"
+                  dangerouslySetInnerHTML={{ __html: product.description || ""}}/>
               </div>
             </div>
 

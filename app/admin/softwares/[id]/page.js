@@ -8,6 +8,10 @@ import { CldUploadWidget } from "next-cloudinary";
 import { useParams, useRouter } from "next/navigation";
 import { API_BASE } from "@/lib/api";
 
+// React-Quill for React 19
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css"; // default theme
+
 export default function SoftwareDetailPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -16,7 +20,7 @@ export default function SoftwareDetailPage() {
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
 
-  // Fetch project on mount
+  // Fetch project
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -24,11 +28,12 @@ export default function SoftwareDetailPage() {
         const result = await res.json();
 
         if (result.success) {
-          // Tech ko comma-separated string bana dete hain
           const projectData = {
             ...result.data,
             tech: result.data.tech.join(", "),
             platforms: result.data.platforms || [],
+            // description is already HTML string from DB (or plain if new)
+            description: result.data.description || "",
           };
           setProject(projectData);
         } else {
@@ -99,6 +104,7 @@ export default function SoftwareDetailPage() {
       gateway: Number(project.gateway) || 0,
       whatsapp: Number(project.whatsapp) || 0,
       multiLanguage: Number(project.multiLanguage) || 0,
+      // description already HTML string from ReactQuill
     };
 
     try {
@@ -109,7 +115,6 @@ export default function SoftwareDetailPage() {
       });
 
       const result = await res.json();
-
       if (result.success) {
         alert("Project updated successfully!");
         router.back();
@@ -125,11 +130,8 @@ export default function SoftwareDetailPage() {
     if (!confirm("Are you sure? This cannot be undone.")) return;
 
     try {
-      const res = await fetch(`${API_BASE}/project/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(`${API_BASE}/project/${id}`, { method: "DELETE" });
       const result = await res.json();
-
       if (result.success) {
         alert("Project deleted!");
         window.location.href = "/admin/softwares";
@@ -153,98 +155,55 @@ export default function SoftwareDetailPage() {
   if (!project) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <p className="text-2xl text-red-400">Project not found</p>
-          <Link
-            href="/admin/softwares"
-            className="text-blue-400 hover:text-blue-300"
-          >
-            ← Back to Projects
-          </Link>
-        </div>
+        <p className="text-2xl text-red-400">Project not found</p>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Back Button */}
       <div className="border-b border-white/10 backdrop-blur-xl bg-white/2">
         <div className="px-8 py-6 flex items-center gap-4">
-          <Link
-            href="/admin/softwares"
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back to Projects</span>
+          <Link href="/admin/softwares" className="flex items-center gap-2 text-gray-400 hover:text-white">
+            <ArrowLeft className="w-5 h-5" /> Back to Projects
           </Link>
         </div>
       </div>
 
       <div className="p-8 max-w-6xl mx-auto">
-        <form onSubmit={handleUpdate} className="space-y-8">
-          {/* Screenshots Section */}
-          <div>
-            <label className="block text-lg font-semibold text-gray-300 mb-4">
-              Screenshots (Max 3)
-            </label>
+        <form onSubmit={handleUpdate} className="space-y-10">
 
-            {/* Display Existing Screenshots */}
-            {project.screenshots && project.screenshots.length > 0 && (
+          {/* Screenshots - unchanged */}
+          <div>
+            <label className="block text-lg font-semibold text-gray-300 mb-4">Screenshots (Max 3)</label>
+            {project.screenshots?.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                {project.screenshots.map((url, index) => (
-                  <div
-                    key={index}
-                    className="relative group rounded-xl overflow-hidden border-2 border-blue-500/50 hover:border-blue-500 transition-all"
-                  >
-                    <Image
-                      src={url}
-                      alt={`Screenshot ${index + 1}`}
-                      width={400}
-                      height={300}
-                      className="w-full h-48 object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeScreenshot(index)}
-                      className="absolute top-2 right-2 p-2 bg-red-600/90 rounded-lg hover:bg-red-700 transition-all opacity-0 group-hover:opacity-100"
-                    >
-                      <X className="w-4 h-4 text-white" />
+                {project.screenshots.map((url, i) => (
+                  <div key={i} className="relative group rounded-xl overflow-hidden border-2 border-blue-500/50 hover:border-blue-500">
+                    <Image src={url} alt="" width={400} height={300} className="w-full h-48 object-cover" />
+                    <button type="button" onClick={() => removeScreenshot(i)}
+                      className="absolute top-2 right-2 p-2 bg-red-600/90 rounded-lg opacity-0 group-hover:opacity-100">
+                      <X className="w-4 h-4" />
                     </button>
                   </div>
                 ))}
               </div>
             )}
-
-            {/* Upload New Screenshot */}
             {project.screenshots.length < 3 && (
-              <CldUploadWidget
-                uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+              <CldUploadWidget uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
                 onSuccess={handleUploadSuccess}
                 onQueuesStart={() => setIsUploading(true)}
-                onQueuesEnd={() => setIsUploading(false)}
-              >
+                onQueuesEnd={() => setIsUploading(false)}>
                 {({ open }) => (
-                  <div
-                    onClick={() => open()}
-                    className="border-2 border-dashed border-white/20 rounded-2xl p-10 text-center cursor-pointer hover:border-blue-500/60 hover:bg-white/5 transition-all"
-                  >
+                  <div onClick={open} className="border-2 border-dashed border-white/20 rounded-2xl p-10 text-center cursor-pointer hover:border-blue-500/60 hover:bg-white/5">
                     {isUploading ? (
-                      <div className="space-y-4">
-                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto" />
-                        <p className="text-blue-400 text-lg">Uploading...</p>
-                      </div>
+                      <>Uploading...</>
                     ) : (
-                      <div className="space-y-4">
+                      <>
                         <Upload className="w-16 h-16 mx-auto text-gray-400" />
-                        <p className="text-white text-xl font-medium">
-                          Click to Upload Screenshot
-                        </p>
-                        <p className="text-gray-500">
-                          {project.screenshots.length}/3 uploaded • JPG, PNG,
-                          WebP
-                        </p>
-                      </div>
+                        <p className="text-white text-xl font-medium">Click to Upload Screenshot</p>
+                        <p className="text-gray-500">{project.screenshots.length}/3 uploaded</p>
+                      </>
                     )}
                   </div>
                 )}
@@ -252,67 +211,51 @@ export default function SoftwareDetailPage() {
             )}
           </div>
 
-          {/* Basic Info */}
+          {/* Name & Category */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input
-              type="text"
-              name="name"
-              value={project.name}
-              onChange={handleChange}
-              placeholder="Project Name"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition"
-              required
-              minLength={3}
-              maxLength={100}
-            />
-
-            <select
-              name="category"
-              value={project.category}
-              onChange={handleChange}
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500/60 outline-none transition"
-            >
-              <option value="Food" className="bg-black">Food</option>
-              <option value="E-commerce" className="bg-black">E-commerce</option>
-              <option value="Health" className="bg-black">Health</option>
-              <option value="Education" className="bg-black">Education</option>
-              <option value="Finance" className="bg-black">Finance</option>
-              <option value="Social" className="bg-black">Social</option>
-              <option value="Other" className="bg-black">Other</option>
+            <input type="text" name="name" value={project.name} onChange={handleChange} placeholder="Project Name"
+              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl" required />
+            <select name="category" value={project.category} onChange={handleChange}
+              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl">
+              {["Food","E-commerce","Health","Education","Finance","Social","Other"].map(c => (
+                <option key={c} value={c} className="bg-black">{c}</option>
+              ))}
             </select>
           </div>
 
-          {/* Description */}
-          <textarea
-            name="description"
-            value={project.description}
-            onChange={handleChange}
-            placeholder="Project Description"
-            rows={4}
-            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition resize-none"
-            required
-            minLength={10}
-            maxLength={500}
-          />
+          {/* RICH TEXT DESCRIPTION - NEW */}
+          <div className="space-y-3">
+            <label className="block text-lg font-semibold text-gray-300">Project Description (supports bold, lists, headings, etc.)</label>
+            <div className="rounded-xl overflow-hidden border border-white/10">
+              <ReactQuill
+                theme="snow"
+                value={project.description}
+                onChange={(html) => setProject(prev => ({ ...prev, description: html }))}
+                placeholder="Write rich description here..."
+                modules={{
+                  toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    ['link', 'clean']
+                  ]
+                }}
+                className="bg-transparent text-white"
+                style={{ minHeight: '180px' }}
+              />
+            </div>
+            <p className="text-sm text-gray-500">Formatting will be saved & displayed exactly as you see</p>
+          </div>
 
           {/* Platforms */}
           <div>
-            <label className="block text-lg font-semibold text-gray-300 mb-4">
-              Platforms
-            </label>
+            <label className="block text-lg font-semibold text-gray-300 mb-4">Platforms</label>
             <div className="flex flex-wrap gap-4">
-              {["Android", "iOS", "Web", "Desktop"].map((platform) => (
-                <label
-                  key={platform}
-                  className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition-all"
-                >
-                  <input
-                    type="checkbox"
-                    checked={project.platforms.includes(platform)}
-                    onChange={() => togglePlatform(platform)}
-                    className="w-5 h-5 accent-blue-500"
-                  />
-                  <span className="text-white font-medium">{platform}</span>
+              {["Android", "iOS", "Web", "Desktop"].map(p => (
+                <label key={p} className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10">
+                  <input type="checkbox" checked={project.platforms.includes(p)}
+                    onChange={() => togglePlatform(p)} className="w-5 h-5 accent-blue-500" />
+                  <span>{p}</span>
                 </label>
               ))}
             </div>
@@ -320,141 +263,40 @@ export default function SoftwareDetailPage() {
 
           {/* Tech Stack & Demo Link */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input
-              type="text"
-              name="tech"
-              value={project.tech}
-              onChange={handleChange}
-              placeholder="Tech Stack (comma separated)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition"
-              required
-            />
-
-            <input
-              type="url"
-              name="demoLink"
-              value={project.demoLink || ""}
-              onChange={handleChange}
-              placeholder="Demo Link (optional)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500/60 outline-none transition"
-            />
+            <input type="text" name="tech" value={project.tech} onChange={handleChange}
+              placeholder="Tech Stack (comma separated)" className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl" required />
+            <input type="url" name="demoLink" value={project.demoLink || ""} onChange={handleChange}
+              placeholder="Demo Link (optional)" className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl" />
           </div>
 
-          {/* Pricing */}
+          {/* Pricing Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <input
-              type="number"
-              name="price"
-              value={project.price}
-              onChange={handleChange}
-              placeholder="Base Price (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              required
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="customization"
-              value={project.customization}
-              onChange={handleChange}
-              placeholder="Customization (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="deployment"
-              value={project.deployment}
-              onChange={handleChange}
-              placeholder="Deployment (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="branding"
-              value={project.branding}
-              onChange={handleChange}
-              placeholder="Branding (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="payment"
-              value={project.payment}
-              onChange={handleChange}
-              placeholder="Payment (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="gateway"
-              value={project.gateway}
-              onChange={handleChange}
-              placeholder="Gateway (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="whatsapp"
-              value={project.whatsapp}
-              onChange={handleChange}
-              placeholder="WhatsApp (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
-
-            <input
-              type="number"
-              name="multiLanguage"
-              value={project.multiLanguage}
-              onChange={handleChange}
-              placeholder="Multi-Language (₹)"
-              className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-purple-500/60 outline-none transition"
-              min="0"
-            />
+            {["price","customization","deployment","branding","payment","gateway","whatsapp","multiLanguage"].map(field => (
+              <input key={field} type="number" name={field} value={project[field]} onChange={handleChange}
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g,' $1') + " (₹)"}
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl" min="0" />
+            ))}
           </div>
 
-          {/* Active Status */}
-          <label className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition-all w-fit">
-            <input
-              type="checkbox"
-              name="isActive"
-              checked={project.isActive}
-              onChange={handleChange}
-              className="w-5 h-5 accent-green-500"
-            />
-            <span className="text-white font-medium">Active Project</span>
+          {/* Active Toggle */}
+          <label className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-xl w-fit">
+            <input type="checkbox" name="isActive" checked={project.isActive} onChange={handleChange}
+              className="w-5 h-5 accent-green-500" />
+            <span>Active Project</span>
           </label>
 
-          {/* Action Buttons */}
+          {/* Buttons */}
           <div className="flex justify-between items-center pt-8 border-t border-white/10">
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="px-8 py-4 bg-red-600/20 hover:bg-red-600/30 text-red-400 font-semibold rounded-xl flex items-center gap-3 transition-all hover:scale-105"
-            >
-              <Trash2 className="w-5 h-5" />
-              Delete Project
+            <button type="button" onClick={handleDelete}
+              className="px-8 py-4 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-xl flex items-center gap-3">
+              <Trash2 className="w-5 h-5" /> Delete Project
             </button>
-
-            <button
-              type="submit"
-              className="px-10 py-4 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3 shadow-xl hover:shadow-purple-500/50 transition-all hover:scale-105"
-            >
-              <Save className="w-5 h-5" />
-              Update Project
+            <button type="submit"
+              className="px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3">
+              <Save className="w-5 h-5" /> Update Project
             </button>
           </div>
+
         </form>
       </div>
     </div>
