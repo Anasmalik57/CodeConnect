@@ -101,9 +101,9 @@ export default function AdminInstallOwnCodeDetails() {
         </button>
 
         <div className="group relative bg-black/80 border border-blue-500/30 rounded-2xl p-8 shadow-xl shadow-blue-900/50">
-          <span className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-sky-600/30 to-blue-600/20 rounded-2xl blur-xl opacity-60" />
+          <span className="absolute inset-0 bg-linear-to-r from-blue-600/20 via-sky-600/30 to-blue-600/20 rounded-2xl blur-xl opacity-60" />
           <div className="relative">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-sky-400 to-teal-400 bg-clip-text text-transparent mb-6 flex items-center gap-3">
+            <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 via-sky-400 to-teal-400 bg-clip-text text-transparent mb-6 flex items-center gap-3">
               <FolderCode className="w-8 h-8 text-teal-400" />
               Enquiry Details: {request.productLinkOrName}
             </h1>
@@ -157,7 +157,7 @@ export default function AdminInstallOwnCodeDetails() {
                 <button
                   onClick={handleUpdateStatus}
                   disabled={updating || newStatus === request.status}
-                  className="px-6 py-2 bg-gradient-to-r from-blue-600 via-sky-500 to-teal-400 rounded-2xl font-bold text-white shadow-2xl shadow-sky-500/40 hover:shadow-sky-500/70 transition-all duration-400 hover:scale-105 active:scale-95 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 bg-linear-to-r from-blue-600 via-sky-500 to-teal-400 rounded-2xl font-bold text-white shadow-2xl shadow-sky-500/40 hover:shadow-sky-500/70 transition-all duration-400 hover:scale-105 active:scale-95 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {updating ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
                   {updating ? "Updating...." : "Update Status"}
@@ -167,7 +167,7 @@ export default function AdminInstallOwnCodeDetails() {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-red-600 via-red-500 to-red-400 rounded-2xl font-bold text-white shadow-2xl shadow-red-500/40 hover:shadow-red-500/70 transition-all duration-400 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-6 py-3 bg-linear-to-r from-red-600 via-red-500 to-red-400 rounded-2xl font-bold text-white shadow-2xl shadow-red-500/40 hover:shadow-red-500/70 transition-all duration-400 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {deleting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Trash2 className="w-5 h-5" />}
                 {deleting ? "Deleting..." : "Delete Enquiry"}
