@@ -188,7 +188,7 @@ const DevCard = ({ filteredDevelopers }) => {
 
               {/* Skills */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {dev.skills.slice(0, 4).map((skill) => (
+                {dev.skills.slice(0, 3).map((skill) => (
                   <span
                     key={skill}
                     className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md"
@@ -197,7 +197,7 @@ const DevCard = ({ filteredDevelopers }) => {
                   </span>
                 ))}
                 <span className="px-3 py-1 bg-linear-to-tl from-blue-600/40 to-sky-600/40 backdrop-blur-md rounded-full text-xs font-medium text-white border border-blue-500/50 shadow-md">
-                  +{dev?.skills.length - 4}
+                  +{dev?.skills.length - 3}
                 </span>
               </div>
               {/* langs */}
