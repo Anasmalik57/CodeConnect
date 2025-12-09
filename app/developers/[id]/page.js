@@ -1,22 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Calendar,
-  IndianRupee,
-  BadgeCheck,
-  ArrowLeft,
-  Sparkles,
-  TrendingUp,
-  MapPin,
-  LanguagesIcon,
-  Award,
-  Star,
-  Globe,
-  Languages,
-} from "lucide-react";
+import { Calendar, BadgeCheck, ArrowLeft, Sparkles, TrendingUp, MapPin, LanguagesIcon, } from "lucide-react";
 import Image from "next/image";
 import { API_BASE } from "@/lib/api";
+import { HiOutlineCash } from "react-icons/hi";
+import useINRConverter from "@/utils/currencyConverter";
 
 
 
@@ -26,6 +15,7 @@ export default function DeveloperDetailClient() {
   const [developer, setDeveloper] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { convertINR } = useINRConverter();
   const [formData, setFormData] = useState({
     clientName: "",
     email: "",
@@ -103,7 +93,7 @@ export default function DeveloperDetailClient() {
       projectType: formData.projectType,
       estimatedBudget: formData.budget,
       description: formData.description,
-      developerRate: `₹${developer.hourlyRate}/hr`, // optional, just for display
+      developerRate: `₹${convertINR(developer?.hourlyRate)}/hr`, // optional, just for display
       developer: {
         id: developer._id,
         name: developer.name,
@@ -271,7 +261,7 @@ export default function DeveloperDetailClient() {
 
                   <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center hover:bg-white/10 transition-colors">
                     <div className="flex justify-center mb-2">
-                      <IndianRupee className="size-5 text-green-400" />
+                      <HiOutlineCash className="size-5 text-green-400" />
                     </div>
                     <p className="text-[16px] md:text-2xl font-bold text-white mb-1">
                       ₹{developer.hourlyRate}
@@ -441,7 +431,7 @@ export default function DeveloperDetailClient() {
                   <div className="flex items-center justify-between py-3 px-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                     <span className="text-xs text-gray-400">Hourly Rate</span>
                     <span className="text-sm font-bold text-blue-400">
-                      ₹{developer.hourlyRate}/hr
+                      {loading ? "......." : convertINR(developer?.hourlyRate)}/hr
                     </span>
                   </div>
 
