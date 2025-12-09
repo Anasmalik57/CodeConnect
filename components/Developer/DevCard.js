@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { X, Calendar, Sparkles, Activity, BadgeCheck, IndianRupee, } from "lucide-react";
+import {
+  X,
+  Calendar,
+  Sparkles,
+  Activity,
+  BadgeCheck,
+  IndianRupee,
+  Star,
+  Share2,
+} from "lucide-react";
 import { HiOutlineCash } from "react-icons/hi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -112,11 +121,22 @@ const DevCard = ({ filteredDevelopers }) => {
     setSelectedDeveloper(null);
   };
 
+  const shareDeveloper = async (dev) => {
+    if(navigator.share){
+       await navigator.share({
+        title: dev?.name,
+        text: `${dev?.level} Developer with ${dev?.experience}+ years experience`,
+        url: `https://www.nodeskdeveloper.com/developers/${dev?._id}`,
+      });
+    }
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredDevelopers.map((dev, index) => (
-          <div key={dev._id}
+          <div
+            key={dev._id}
             onClick={() => router.push(`/developers/${dev?._id}`)}
             className="group relative bg-linear-to-br from-blue-900/30 via-sky-900/20 to-teal-900/30 backdrop-blur-2xl border border-blue-500/40 rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/60 hover:shadow-blue-600/80 hover:border-blue-400 transition-all duration-500"
           >
@@ -154,7 +174,7 @@ const DevCard = ({ filteredDevelopers }) => {
                     >
                       {dev.name}
                     </h3>
-                    <div className="absolute top-8 right-7">
+                    <div className="absolute top-8 right-17">
                       {dev?.available == true ? (
                         <div className="size-3 p-1 bg-green-500 rounded-full animate-pulse" />
                       ) : (
@@ -162,12 +182,15 @@ const DevCard = ({ filteredDevelopers }) => {
                       )}
                     </div>
                     {/* Rating */}
-                    {/* <div className="flex items-center gap-1 bg-blue-900/50 px-2 py-1 rounded-full">
-                      <Star className="size-4 text-yellow-400 fill-current" />
-                      <span className="text-sm text-white font-semibold">
-                        {Math.floor(Math.random()*5)+1}
-                      </span>
-                    </div> */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        shareDeveloper(dev)
+                      }}
+                      className=" absolute top-[22px] right-7 flex items-center gap-1 bg-blue-900/50 p-2 rounded-full"
+                    >
+                      <Share2 className="size-4 text-yellow-400 fill-current" />
+                    </button>
                   </div>
 
                   <p className="text-xs text-blue-300 mt-1">
