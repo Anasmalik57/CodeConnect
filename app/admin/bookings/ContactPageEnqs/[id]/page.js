@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft, Loader2, Trash2, CheckCircle, Mail, Phone, DollarSign, FileText, Clock } from "lucide-react";
+import { API_BASE } from "@/lib/api";
 
-export const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
+
 
 export default function AdminContactDetail() {
   const { id } = useParams();

@@ -27,8 +27,7 @@ const ProductCard = ({ filteredProducts }) => {
     <div className="max-w-7xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProducts.map((product) => (
-          <button
-            key={product._id || product.id}
+          <div key={product._id || product.id}
             onClick={() => router.push(`/softwares-readymade/${product?._id}`)}
             className="group relative bg-linear-to-br from-slate-900/90 via-blue-900/50 to-slate-900/90 backdrop-blur-xl rounded-3xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2"
           >
@@ -152,7 +151,7 @@ const ProductCard = ({ filteredProducts }) => {
                 </button>
               </div>
             </div>
-          </button>
+          </div>
         ))}
       </div>
 

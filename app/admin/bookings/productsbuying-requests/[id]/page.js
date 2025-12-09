@@ -5,8 +5,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, User, Mail, Phone, Package, IndianRupee, Calendar, Sparkles, Check, Trash2, Plus } from "lucide-react";
+import { API_BASE } from "@/lib/api";
 
-const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
 
 export default function BuyEnquiryDetail() {
   const params = useParams();

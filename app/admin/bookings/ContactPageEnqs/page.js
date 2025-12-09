@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Mail, Phone, DollarSign, FileText, Clock, Loader2, Coins, CoinsIcon } from "lucide-react";
+import { Mail, Phone, Loader2, CoinsIcon } from "lucide-react";
+import { API_BASE } from "@/lib/api";
 
-export const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
 
 export default function AdminContactEnquiries() {
   const [contacts, setContacts] = useState([]);

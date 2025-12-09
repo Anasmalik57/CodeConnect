@@ -1,14 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  ArrowLeft,
-  PlayCircle,
-  Copy,
-  Smartphone,
-  Monitor,
-  Check,
-} from "lucide-react";
+import { ArrowLeft, PlayCircle, Copy, Smartphone, Monitor, Check, } from "lucide-react";
 import Link from "next/link";
 import { API_BASE } from "@/lib/api";
 import Image from "next/image";

@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, Phone, MapPin, Link, FileText, Briefcase, Loader2 } from "lucide-react";
+import { API_BASE } from "@/lib/api";
 
-export const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://nodeskdevbackend.onrender.com/api";
 
 export default function AdminCareerEnquiries() {
   const [applications, setApplications] = useState([]);
