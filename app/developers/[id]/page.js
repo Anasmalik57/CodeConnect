@@ -31,7 +31,7 @@ export async function generateMetadata({ params }) {
     // Developer photo as image (agar nahi hai to fallback)
     const ogImage = developer.photo?.startsWith("http")
       ? developer.photo
-      : `https://www.nodeskdeveloper.com${developer.photo || "/default-dev-photo.jpg"}`;
+      : `https://www.nodeskdeveloper.com${developer.photo || "/dev.webp"}`;
 
     return {
       title,
