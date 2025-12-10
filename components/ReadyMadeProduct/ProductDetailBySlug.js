@@ -7,7 +7,7 @@ import { API_BASE } from "@/lib/api";
 import Image from "next/image";
 
 export default function ProductDetailBySlug() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState(0); // Track main image index
@@ -29,7 +29,7 @@ export default function ProductDetailBySlug() {
   });
 
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
 
     const fetchProduct = async () => {
       try {
@@ -55,7 +55,7 @@ export default function ProductDetailBySlug() {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return (
