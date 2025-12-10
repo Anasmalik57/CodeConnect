@@ -48,15 +48,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Optional: Build time pre-render (agar chahte ho sab products static generate ho)
-export async function generateStaticParams() {
-  const res = await fetch(`${API_BASE}/projects`);
-  const { data: products } = await res.json();
 
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
-}
 
 export default function ProductDetailPage() {
   return <ProductDetailBySlug />;

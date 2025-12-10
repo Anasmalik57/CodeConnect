@@ -49,14 +49,14 @@ export async function generateMetadata({ params }) {
 }
 
 // Optional: Agar static generation chahte ho (build time pre-render)
-export async function generateStaticParams() {
-  const res = await fetch(`${API_BASE}/developers`); // All developers endpoint
-  const { data: developers } = await res.json();
+// export async function generateStaticParams() {
+//   const res = await fetch(`${API_BASE}/developers`); // All developers endpoint
+//   const { data: developers } = await res.json();
 
-  return developers.map((dev) => ({
-    slug: dev.slug,
-  }));
-}
+//   return developers.map((dev) => ({
+//     slug: dev.slug,
+//   }));
+// }
 
 const DeveloperDetailPage = () => {
   return <DeveloperDetailBySlug />;
