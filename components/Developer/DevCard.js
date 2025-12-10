@@ -131,7 +131,7 @@ const DevCard = ({ filteredDevelopers }) => {
     await navigator.share({
       title: `${dev?.name} - ${dev?.level} Developer (${dev?.experience}+ years exp)`,
       text: `${dev?.level} Developer with ${dev?.experience}+ years experience. Skilled in ${dev.skills.slice(0, 3).join(", ")} and more.`,
-      url: `https://www.nodeskdeveloper.com/developers/${dev?._id}`,
+      url: `https://www.nodeskdeveloper.com/developer/${dev?.slug}`, // yahan change kiya
     });
   } catch (err) {
     if (err.name !== "AbortError") {
