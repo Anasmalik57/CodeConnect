@@ -1,4 +1,4 @@
-import DeveloperDetailClient from "@/components/Developer/DeveloperDetailClient";
+import DeveloperDetailBySlug from "@/components/Developer/DeveloperDetailBySlug";
 import { API_BASE } from "@/lib/api";
 
 export async function generateMetadata({ params }) {
@@ -59,7 +59,7 @@ export async function generateStaticParams() {
 }
 
 const DeveloperDetailPage = () => {
-  return <DeveloperDetailClient />;
+  return <DeveloperDetailBySlug />;
 };
 
 export default DeveloperDetailPage;
