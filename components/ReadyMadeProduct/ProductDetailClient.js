@@ -5,12 +5,14 @@ import { ArrowLeft, PlayCircle, Copy, Smartphone, Monitor, Check, } from "lucide
 import Link from "next/link";
 import { API_BASE } from "@/lib/api";
 import Image from "next/image";
+import useINRConverter from "@/utils/currencyConverter";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState(0); // Track main image index
+  const { convertINR } = useINRConverter();
 
   // Form & Addons State
   const [formData, setFormData] = useState({
@@ -123,20 +125,18 @@ export default function ProductDetailPage() {
   const total = basePrice + addonsTotal + serviceFee;
 
   const handleCopyQuote = () => {
-    let quote = `${product.name}\nBase Price: ₹${basePrice.toLocaleString()}`;
+    let quote = `${product.name}\nBase Price: ${convertINR(basePrice.toLocaleString())}`;
 
     if (selectedAddons.length > 0) {
       quote += `\n\nSelected Add-ons:`;
       selectedAddons.forEach((addon) => {
-        quote += `\n• ${addon.label}: ₹${addon.cost.toLocaleString()}`;
+        quote += `\n• ${addon.label}: ${convertINR(addon.cost.toLocaleString())}`;
       });
-      quote += `\n\nAdd-ons Total: ₹${Math.round(
-        addonsTotal
-      ).toLocaleString()}`;
+      quote += `\n\nAdd-ons Total: ${convertINR(Math.round(addonsTotal).toLocaleString())}`;
     }
 
-    quote += `\nService Fee (5%): ₹${Math.round(serviceFee).toLocaleString()}`;
-    quote += `\n\nTotal Amount: ₹${Math.round(total).toLocaleString()}`;
+    quote += `\nService Fee (5%): ${convertINR(Math.round(serviceFee).toLocaleString())}`;
+    quote += `\n\nTotal Amount: ${convertINR(Math.round(total).toLocaleString())}`;
 
     navigator.clipboard.writeText(quote);
     alert("Quote copied to clipboard!");
@@ -419,7 +419,7 @@ export default function ProductDetailPage() {
                         >
                           <span className="text-slate-300">{addon.label}</span>
                           <span className="font-medium text-white">
-                            ₹{addon.cost.toLocaleString()}
+                            {convertINR(addon.cost.toLocaleString())}
                           </span>
                         </div>
                       ))}
@@ -432,27 +432,27 @@ export default function ProductDetailPage() {
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-400">Base Price</span>
                     <span className="font-semibold text-white">
-                      ₹{basePrice.toLocaleString()}
+                      {loading ? "......." : convertINR(basePrice.toLocaleString())}
                     </span>
                   </div>
                   {selectedAddons.length > 0 && (
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-400">Add-ons Total</span>
                       <span className="font-semibold text-white">
-                        ₹{addonsTotal.toLocaleString()}
+                        {loading ? "......." : convertINR(addonsTotal.toLocaleString())}
                       </span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-400">Service Fee (5%)</span>
                     <span className="text-white">
-                      ₹{Math.round(serviceFee).toLocaleString()}
+                      {loading ? "......." : convertINR(Math.round(serviceFee).toLocaleString())}
                     </span>
                   </div>
                   <div className="flex justify-between text-xl font-bold pt-3 border-t border-slate-600">
                     <span>Total</span>
                     <span className="text-purple-400">
-                      ₹{Math.round(total).toLocaleString()}
+                      {loading ? "......." : convertINR(Math.round(total).toLocaleString())}
                     </span>
                   </div>
                 </div>

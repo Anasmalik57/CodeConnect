@@ -292,7 +292,7 @@ export default function SoftwareDetailPage() {
               <Trash2 className="w-5 h-5" /> Delete Project
             </button>
             <button type="submit"
-              className="px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3">
+              className="px-10 py-4 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3">
               <Save className="w-5 h-5" /> Update Project
             </button>
           </div>
