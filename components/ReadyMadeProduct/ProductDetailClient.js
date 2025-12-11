@@ -321,8 +321,8 @@ export default function ProductDetailPage() {
                 </button>
               </div>
               {/* ============================== */}
-              <div className="border mt-6 p-4 text-sm border-white/20 rounded-xl">
-                <div className=" prose prose-invert prose-sm max-w-none  text-slate-300 leading-relaxed  [&_ul]:list-disc [&_ul]:pl-5  [&_ol]:list-decimal [&_ol]:pl-5  [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-6 [&_h1]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-5 [&_h2]:mb-2 [&_strong]:text-white [&_em]:italic [&_a]:text-blue-400 [&_a]:underline"
+              <div className="border mt-6 p-4 pr-px py-2 text-sm border-white/20 rounded-xl">
+                <div className="max-h-110 prodfeatures overflow-y-scroll prose prose-invert prose-sm max-w-none  text-slate-300 leading-relaxed  [&_ul]:list-disc [&_ul]:pl-5  [&_ol]:list-decimal [&_ol]:pl-5  [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-6 [&_h1]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-5 [&_h2]:mb-2 [&_strong]:text-white [&_em]:italic [&_a]:text-blue-400 [&_a]:underline"
                   dangerouslySetInnerHTML={{ __html: product.description || ""}}/>
               </div>
             </div>
