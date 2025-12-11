@@ -1,15 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Calendar,
-  User,
-  Code,
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  Sparkles,
-} from "lucide-react";
+import { Calendar, Code, AlertCircle } from "lucide-react";
 import { API_BASE } from "@/lib/api";
 
 export default function AdminDevEnquires() {
