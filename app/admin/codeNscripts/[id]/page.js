@@ -13,18 +13,18 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css"; // default theme
 
 export default function CodeNScriptDetailPage() {
-  const { slug } = useParams();
+  const { id } = useParams();
   const router = useRouter();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
 
-  // Fetch product by slug
+  // Fetch product by id
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`${API_BASE}/code-n-script-card/slug/${slug}`);
+        const res = await fetch(`${API_BASE}/code-n-script-card/${id}`);
         const result = await res.json();
 
         if (result.success) {
@@ -46,8 +46,8 @@ export default function CodeNScriptDetailPage() {
       }
     };
 
-    if (slug) fetchProduct();
-  }, [slug]);
+    if (id) fetchProduct();
+  }, [id]);
 
   const handleUploadSuccess = (result) => {
     const url = result?.info?.secure_url;
@@ -113,7 +113,7 @@ export default function CodeNScriptDetailPage() {
     };
 
     try {
-      const res = await fetch(`${API_BASE}/code-n-script-card/slug/${slug}`, {
+      const res = await fetch(`${API_BASE}/code-n-script-card/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),
@@ -135,9 +135,7 @@ export default function CodeNScriptDetailPage() {
     if (!confirm("Are you sure? This cannot be undone.")) return;
 
     try {
-      const res = await fetch(`${API_BASE}/code-n-script-card/${product._id}`, {
-        method: "DELETE",
-      });
+     const res = await fetch(`${API_BASE}/code-n-script-card/${product._id}`, { method: "DELETE" });
       const result = await res.json();
       if (result.success) {
         alert("Product deleted!");
@@ -171,7 +169,7 @@ export default function CodeNScriptDetailPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="border-b border-white/10 backdrop-blur-xl bg-white/2">
-        <div className="px-8 py-6 flex items-center gap-4">
+        <div className="px-8 py-6 md:py-10 flex items-center gap-4">
           <Link
             href="/admin/code-n-script"
             className="flex items-center gap-2 text-gray-400 hover:text-white"
@@ -315,13 +313,13 @@ export default function CodeNScriptDetailPage() {
               {["Web", "Android", "iOS", "Desktop", "Server"].map((t) => (
                 <label
                   key={t}
-                  className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10"
+                  className="flex items-center gap-2 md:gap-3 px-4 py-2 text-sm md:px-6 md:py-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10"
                 >
                   <input
                     type="checkbox"
                     checked={product.installationType.includes(t)}
                     onChange={() => toggleInstallationType(t)}
-                    className="w-5 h-5 accent-blue-500"
+                    className="size-4 accent-blue-500"
                   />
                   <span>{t}</span>
                 </label>
@@ -476,15 +474,15 @@ export default function CodeNScriptDetailPage() {
             <button
               type="button"
               onClick={handleDelete}
-              className="px-8 py-4 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-xl flex items-center gap-3"
+              className="px-8 py-4 text-xs md:text-sm bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-xl flex items-center gap-3"
             >
-              <Trash2 className="w-5 h-5" /> Delete Product
+              <Trash2 className="size-4" /> Delete
             </button>
             <button
               type="submit"
-              className="px-10 py-4 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3"
+              className="px-10 py-4 text-xs md:text-sm bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl flex items-center gap-3"
             >
-              <Save className="w-5 h-5" /> Update Product
+              <Save className="size-4" /> Update
             </button>
           </div>
         </form>

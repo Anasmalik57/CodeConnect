@@ -120,8 +120,8 @@ export default function AddcodeNscriptModal({ isOpen, onClose, onSuccess }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
       <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-slate-950 border border-teal-500/30 rounded-2xl shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-teal-500/20 bg-slate-950/90 backdrop-blur">
-          <h2 className="text-2xl font-bold text-white">
+        <div className="sticky top-0 z-10 flex items-center justify-between p-4 md:p-6 border-b border-teal-500/20 bg-slate-950/90 backdrop-blur">
+          <h2 className="text-[16px] md:text-2xl font-bold text-white">
             Add New Code & Script Product
           </h2>
           <button
@@ -136,7 +136,7 @@ export default function AddcodeNscriptModal({ isOpen, onClose, onSuccess }) {
           {/* Images */}
           <div>
             <label className="block text-lg font-semibold text-teal-300 mb-4">
-              Images (Max 4)
+              Images (Max 3)
             </label>
             {images.length > 0 && (
               <div className="grid grid-cols-4 gap-4 mb-6">
@@ -305,13 +305,13 @@ export default function AddcodeNscriptModal({ isOpen, onClose, onSuccess }) {
               {["Web", "Android", "iOS", "Desktop", "Server"].map((type) => (
                 <label
                   key={type}
-                  className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-teal-500/30 rounded-xl cursor-pointer hover:bg-teal-500/10 transition"
+                  className="flex items-center gap-2 text-sm  md:gap-3 px-4 py-2 md:px-6 md:py-3 bg-white/5 border border-teal-500/30 rounded-xl cursor-pointer hover:bg-teal-500/10 transition"
                 >
                   <input
                     type="checkbox"
                     checked={formData.installationType.includes(type)}
                     onChange={() => toggleInstallationType(type)}
-                    className="w-5 h-5 accent-teal-500"
+                    className="size-4 accent-teal-500"
                   />
                   <span className="text-white">{type}</span>
                 </label>
@@ -331,7 +331,7 @@ export default function AddcodeNscriptModal({ isOpen, onClose, onSuccess }) {
                 value={formData.basePrice}
                 onChange={handleChange}
                 placeholder="Base Price"
-                className="px-6 py-4 bg-white/5 border border-teal-500/30 rounded-xl text-white"
+                className="px-6 py-3 bg-white/5 border border-teal-500/30 rounded-xl text-white placeholder:text-xs"
                 min="0"
                 required
               />
@@ -343,7 +343,7 @@ export default function AddcodeNscriptModal({ isOpen, onClose, onSuccess }) {
                   value={formData.additionalCharges[key]}
                   onChange={handleChange}
                   placeholder={key.replace(/([A-Z])/g, " $1").trim()}
-                  className="px-6 py-4 bg-white/5 border border-teal-500/30 rounded-xl text-white placeholder-gray-500"
+                  className="px-6 py-3 bg-white/5 border border-teal-500/30 rounded-xl text-white placeholder-gray-500  placeholder:text-xs placeholder:capitalize"
                   min="0"
                 />
               ))}

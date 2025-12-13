@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Code2, Link, Image, Tag, Loader2, IndianRupee } from "lucide-react";
+import { Loader2, IndianRupee, Link2 } from "lucide-react";
 import { API_BASE } from "@/lib/api";
 import AddcodeNscriptModal from "@/components/Modals/AddcodeNscriptModal";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function AdminCodeNscriptPage() {
   const [cards, setCards] = useState([]);
@@ -71,81 +73,109 @@ export default function AdminCodeNscriptPage() {
             >
               + Add New Product
             </button>
-            <div className="p-3 bg-linear-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-xl">
-              <Code2 className="w-6 h-6 text-teal-400" />
+            
+          </div>
+        </div>
+       {/* ============================================================== */}
+{/*========================== Card Here ==========================*/}
+{/* ============================================================== */}
+<div className="p-8">
+  {cards.length === 0 ? (
+    <p className="text-center text-white/60 text-lg">
+      No products added yet
+    </p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {cards.map((card) => (
+        <div
+          key={card._id}
+          className="group relative bg-linear-to-br from-slate-900/95 to-slate-950/95 border border-teal-500/30 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm hover:shadow-teal-500/20 transition-all duration-500 hover:-translate-y-1"
+        >
+          {/* Glow Effect */}
+          <div className="absolute -inset-0.5 bg-linear-to-r from-teal-500 to-cyan-500 rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
+          
+          {/* Card Content */}
+          <div className="relative">
+            {/* Image Section with Badges */}
+            <div className="relative h-52 overflow-hidden">
+              <Image
+                src={card.images[0] || "/productImage.webp"}
+                width={1920}
+                height={1080}
+                alt={card.name}
+                loading="lazy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent" />
+              
+              {/* Product Type Badge - Top Right */}
+              <span className="absolute top-4 right-4 px-3 py-1.5 bg-teal-500/90 backdrop-blur-md text-white text-xs font-semibold rounded-lg shadow-lg">
+                {card.productType}
+              </span>
+
+              {/* Installation Types - Bottom Right */}
+              <div className="absolute bottom-4 right-4  flex flex-wrap gap-2 justify-end">
+                {card.installationType.map((e, i) => (
+                  <span 
+                    key={i} 
+                    className="px-3 py-1 bg-slate-900/90 backdrop-blur-md border border-teal-500/40 text-teal-300 text-[10px] font-semibold rounded-lg shadow-lg"
+                  >
+                    {e}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Content Section */}
+            <div className="p-6 space-y-5">
+              {/* Title and Code Link */}
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-bold text-white tracking-tight line-clamp-1">
+                  {card.name}
+                </h3>
+                <Link href={card?.codeLink} className="flex items-center gap-2 text-teal-400 text-sm font-medium hover:text-teal-300 transition-colors group/link" >
+                  <Link2 className="w-4 h-4 group-hover/link:rotate-45 transition-transform" />
+                  <span className="truncate text-xs">View Code</span>
+                </Link>
+              </div>
+
+              {/* Tech Stack */}
+              <div className="flex gap-2 items-end">
+                <div className="flex flex-wrap gap-2">
+                  {card.codeLanguages.slice(0, 4).map((e, i) => (
+                    <span 
+                      key={i} 
+                      className="px-2.5 py-1 bg-slate-800/60 border border-slate-700 text-gray-300 text-[10px] font-mono rounded-2xl h-fit"
+                    >
+                      {e}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Base Price - Bottom */}
+              <div className="flex items-end justify-between gap-2 ">
+                <span className="text-gray-400 text-base font-medium">Base Price</span>
+                <span className="flex items-center gap-1.5 text-cyan-300 text-base font-bold">
+                  <IndianRupee className="w-4 h-4" />
+                  {card.basePrice}
+                </span>
+              </div>
+
+              {/* Update Button */}
+              <button
+                onClick={() => router.push(`/admin/codeNscripts/${card._id}`)}
+                className="w-full py-3.5 bg-linear-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 rounded-xl font-semibold text-white shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Update Details
+              </button>
             </div>
           </div>
         </div>
-        {/* ============================================================== */}
-        {/*========================== Card Here ==========================*/}
-        {/* ============================================================== */}
-        <div className="p-8">
-          {cards.length === 0 ? (
-            <p className="text-center text-white/60 text-lg">
-              No products added yet
-            </p>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-              {cards.map((card) => (
-                <div
-                  key={card._id}
-                  className="group relative bg-linear-to-br from-slate-900/90 to-slate-950/90 border border-teal-500/20 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xl hover:border-teal-500/60 transition-all duration-500 hover:scale-[1.02]"
-                >
-                  <div className="absolute inset-0 bg-linear-to-r from-teal-600/10 to-cyan-600/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                  {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={card.images[0] || "/productImage.webp"}
-                      width={1920}
-                      height={1080}
-                      alt={card.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
-                  </div>
-
-                  <div className="relative p-6 space-y-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      {card.name}
-                    </h3>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-3 py-1 bg-teal-500/20 text-teal-300 text-xs rounded-full">
-                        {card.productType}
-                      </span>
-                      <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded-full flex items-center gap-1">
-                        <IndianRupee className="w-3 h-3" /> {card.basePrice}
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 text-sm">
-                      <p className="flex items-center gap-2 text-gray-300">
-                        <Code2 className="w-4 h-4 text-teal-400" />
-                        {card.codeLanguages.slice(0, 4).join(" • ")}
-                      </p>
-                      <p className="flex items-center gap-2 text-gray-300 truncate">
-                        <Link className="w-4 h-4 text-teal-400" />
-                        {card.codeLink}
-                      </p>
-                    </div>
-
-                    <div className="flex gap-3 mt-6">
-                      <button
-                        onClick={() =>
-                          router.push(`/admin/codeNscripts/${card.slug}`)
-                        }
-                        className="flex-1 py-3 cursor-pointer bg-linear-to-r from-teal-600 to-cyan-600 rounded-xl font-bold text-white shadow-lg hover:shadow-teal-500/60 transition-all duration-300 hover:scale-105"
-                      >
-                        Update Details
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+      ))}
+    </div>
+  )}
+</div>
       </div>
       {/* // Add this just before the last </div> or at the end of return */}
       {isModalOpen && (
